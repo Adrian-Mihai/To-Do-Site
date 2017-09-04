@@ -1,0 +1,48 @@
+<div class="header">
+    <span>{{ userName }}</span>
+    <form method="post" action="/home?_method=PUT">
+        <button class="btn-logout" type="submit">Logout</button>
+    </form>
+</div>
+<div class="task">
+    <h2>Add task</h2>
+    <div id="create-todo">
+        <form autocomplete="off" method="post" action="/home">
+            <input type="input" name="title" placeholder="Enter title" required="required" />
+            <textarea name="description" placeholder="Enter your description" required="required"></textarea>
+            <button class="btn" type="submit">Add</button>
+        </form>
+    </div>
+</div>
+<div class="title">
+    <h1>Todo App</h1>
+</div>
+<ul>
+    {{#each todos }}
+    <li>
+        <a id="edit-page" href="/home/{{ id }}/edit">Edit</a>
+        <div id="date">
+            <h4>{{ title }}</h4>
+            <textarea disabled="disabled">{{ description }}</textarea>
+            <span>{{ date }}</span>
+        </div>
+        <form class="todo-form" method="post" action="/home/{{ id }}?_method=DELETE">
+            <button class="btn-delete" type="submit">Delete</button>
+        </form>
+    </li>
+    {{/each}}
+</ul>
+
+<footer>
+   <div id="page-number"> {{ thisPage }} / {{ lastPage }} </div>
+    {{#if previousCondition }}
+    <form autocomplete="off" method="post" action="/home/previous">
+    <button class="previous" type="submit">&laquo; Previous</button>
+    </form>
+    {{/if}}
+    {{#if nextCondition }}
+    <form autocomplete="off" method="post" action="/home/next">
+    <button class="next" type="submit">Next &raquo;</button>
+    </form>
+    {{/if}}
+</footer>

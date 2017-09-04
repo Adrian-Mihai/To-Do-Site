@@ -1,0 +1,212 @@
+
+body {
+   background-color: #3b5998;
+}
+
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -150px 0 0 -150px;
+	width:326px;
+    height:300px;
+}
+
+.container .login {
+    height: 106px;
+    width: 296px;
+}
+
+.container .regist {
+    width: 164px;
+    float: right;
+}
+
+.container h3 {
+    position:  absolute;
+    top: 75%;
+    left: 8%;
+    width: 276px;
+    color: red;
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.btn {
+    width: 163px;
+    padding: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+input {
+    width: 100%; 
+    padding: 8px;
+    margin-bottom: 10px;
+    text-align:  center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+ 
+.container #name h3 {
+    top: 21%;
+    left: 120%;
+}
+
+.container #user-name h3 {
+    top: 38%;
+    left: 120%;
+}
+
+.container #password h3{
+    top: 73%;
+    left: 120%;
+}
+
+.container #confirm-password h3{
+    top: 90%;
+    left: 120%;
+}
+
+.home {
+    position: absolute;
+	top: 1px;
+	left: 17px;
+}
+
+.title {
+    position: absolute;
+    top: 6%;
+    left: 37%;
+    font-size: 49px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+
+}
+
+.header {
+    position: absolute;
+    top: 3%;
+    left: 90%;
+}
+
+.header .btn-logout {
+    position: absolute;
+    top: 1%;
+    left: 134%;
+    width: 93px;
+    padding: 5px;
+}
+
+.header span {
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    line-height: 1cm;
+    text-decoration: underline;
+}
+
+.task {
+    width: 428px;
+    margin: 0px 0px 0px 68px;
+
+}
+
+ul {
+    list-style: none;
+    height: 518px;
+    padding: 0px 0px 0px 68px;
+}
+
+li {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #ECECEA;
+    border-radius: 5px;
+    padding: 16px;
+    width: 29%;
+    margin: 0px 20px 20px 0px;
+    display: inline-table;
+ }
+
+.todo-form{
+    height: 29px;
+}
+
+.btn-delete {
+    float: right;
+    margin: 2px 0px 0px 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#date {
+    padding-left: 8px;
+}
+
+#edit-page {
+    background-color: #6DBDD6;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    float: right;
+    padding: 5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+#date span {
+    float: left;
+    margin: 9px 0px 0px 0px;
+}
+
+#date #text {
+    font-size: 17px;
+}
+
+textarea {
+    font-size: 14px;
+    width: 504px;
+    height: 154px;
+    color: black;
+}
+
+.previous {
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: greenyellow;
+    position: absolute;
+    top: 92%;
+    left: 42%;
+
+}
+
+.next {
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    width: 106px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: greenyellow;
+    position: absolute;
+    top: 92%;
+    left: 52%;
+}
+
+ footer {
+     text-align: center;
+ }
+
+#page-number {
+    line-height: 2.2cm;
+}
+
+#date h4 {
+    text-align: center;
+    margin: 10px 0px 10px 0px;
+}
+
+#create-todo .btn {
+    margin: 8px 0px 0px 0px;
+}

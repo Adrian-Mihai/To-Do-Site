@@ -1,0 +1,17 @@
+version: "2"
+services:
+  cache:
+    image: redis
+    container_name: todo-redis
+    ports:
+        - "6379:6379"
+  database:
+    image: mysql:5.7
+    container_name: todo-mysql
+    ports:
+        - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=todo
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=docker
+      - MYSQL_PASSWORD=secret
