@@ -1,4 +1,4 @@
-const knex = require('./dataBase.js');
+const knex = require('../dataBase/dataBase.js');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 

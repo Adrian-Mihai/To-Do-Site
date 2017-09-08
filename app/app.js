@@ -1,7 +1,7 @@
-const knex = require("./dataBase.js");
+const knex = require("../dataBase/dataBase.js");
 const userMethod = require("./userMethod.js");
 const todoMethod = require("./todoMethod.js");
-const middleWare = require("./middleware.js");
+const middleWare = require("./function.js");
 const express = require('express');
 const bodyParser = require('body-parser');
 const hbs = require('express-handlebars');
@@ -52,5 +52,5 @@ app.get('/home/next', middleWare.autorize, todoMethod.todoNextGet);
 app.post('/home/next', todoMethod.todoNextPost);
 
 //previous method
-app.get('/home/previous', middleWare.autorize, todoMethod.todoNextGet);
+app.get('/home/previous', middleWare.autorize, todoMethod.todoPreviousGet);
 app.post('/home/previous', todoMethod.todoPreviousPost);

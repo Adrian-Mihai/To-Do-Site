@@ -1,6 +1,5 @@
-const middleWare = require("./middleware.js");
 const util = require('util');
-const knex = require("./dataBase.js");
+const knex = require("../dataBase/dataBase.js");
 
 function todoInsertGet(req, res) {
     const userID = req.cookies.userID;

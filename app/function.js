@@ -1,4 +1,4 @@
-const knex = require("./dataBase.js");
+const knex = require("../dataBase/dataBase.js");
 
 function autorize(req, res, next) {
     if (req.cookies.userID) {
@@ -12,7 +12,7 @@ function autorize(req, res, next) {
                 } else {
                     redirect('/');
                 }
-            });
+    })
     } else {
         res.redirect('/');
     }
