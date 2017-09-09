@@ -1,0 +1,28 @@
+{
+  "name": "todo-server",
+  "version": "0.0.1",
+  "description": "Server for our todo list app",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon ./src/app.js",
+    "develop": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write --semi --single-quote --trailing-comma=all './**/*.js'"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "knex": "^0.13.0",
+    "method-override": "^2.3.9",
+    "mysql": "^2.14.1",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.6.1"
+  }
+}
