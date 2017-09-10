@@ -1,17 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
-const user = require('./routes/user');
+const users = require('./routes/user');
 
 const app = express();
 
 app.use(cookieParser('secret'));
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(methodOverride('_method'));
 
-app.listen(3000);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/',user);
+app.use(cors());
+
+app.use('/api/regist', users);
+
+app.listen(8080);

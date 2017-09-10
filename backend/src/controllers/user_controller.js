@@ -6,7 +6,7 @@ const saltRounds = 10;
 const userController = {};
 
 
-userController.LoginGet(req, res)=> {
+userController.LoginGet = (req, res) => {
   const logError = req.cookies.loginError;
   res.clearCookie('loginError');
   res.render('login', { error: logError });
@@ -49,14 +49,17 @@ function userLogOut(req, res) {
   res.redirect('/');
 }
 
-function userRegistGet(req, res) {
-  const errors = req.cookies.formErrors;
+userController.RegistGet = (req, res) => {
+  /*const errors = req.cookies.formErrors;
   res.clearCookie('formErrors');
-  res.render('regist', { errors: errors });
+  res.render('regist', { errors: errors });*/
 }
 
-function userRegistPost(req, res) {
-  const newUser = {
+userController.RegistPost = (req, res) => {
+  const data = req.body;
+  console.log(data);
+  return res.status(200).send('Succes');
+  /*const newUser = {
     userName: req.body.userName,
     userUserName: req.body.userUserName,
     userEmail: req.body.userEmail,
@@ -115,12 +118,7 @@ function userRegistPost(req, res) {
         }
       });
   });
+  */
 }
 
-module.exports = {
-  userController,
-  userLoginGet,
-  userLogOut,
-  userRegistGet,
-  userRegistPost,
-};
+module.exports = userController;

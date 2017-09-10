@@ -38,10 +38,10 @@ class MenuInfo extends React.Component{
                     onRequestClose={this._handleRequestClose}
                 >
                     <MenuItem onClick={this._handleRequestLogIn}>
-                        Log In
+                        Sign In
                     </MenuItem>
                     <MenuItem onClick={this._handleRequestRegister}>
-                        Register
+                        Sign Up
                     </MenuItem>
                 </Menu>
             </div>
@@ -63,6 +63,7 @@ class MenuInfo extends React.Component{
 
     _handleRequestRegister(){
         this.setState({ open: false });
+        window.location = URL_REPO.REGIST;
     }
 }
 
