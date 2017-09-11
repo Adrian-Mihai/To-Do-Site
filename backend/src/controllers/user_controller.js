@@ -1,16 +1,15 @@
 const knex = require('../../database/database.js');
 const bcrypt = require('bcrypt');
+const usefulFunction = require('../method/function');
 const saltRounds = 10;
 
-
 const userController = {};
-
 
 userController.LoginGet = (req, res) => {
   const logError = req.cookies.loginError;
   res.clearCookie('loginError');
   res.render('login', { error: logError });
-}
+};
 
 userController.login = (req, res) => {
   const userIdentification = {
@@ -42,23 +41,53 @@ userController.login = (req, res) => {
         res.redirect('/');
       }
     });
-}
+};
 
 function userLogOut(req, res) {
   res.clearCookie('userID');
   res.redirect('/');
 }
 
-userController.RegistGet = (req, res) => {
-  /*const errors = req.cookies.formErrors;
-  res.clearCookie('formErrors');
-  res.render('regist', { errors: errors });*/
-}
+userController.Regist = (req, res) => {
+  const userData = req.body;
+  console.log(userData);
+  if (usefulFunction.checkNull(userData)) {
+    return res.status(400).send('Fields cannot be null');
+  } else {
+    knex('users')
+      .first('*')
+      .where('user_name', userData.user_name)
+      .then(data => {
+        if (data) {
+          res.status(400).send('User name already exist');
+        } else {
+          bcrypt.hash(userData.user_password, saltRounds, (err, hash) => {
+            userData.user_password = hash;
+            knex('users')
+              .insert(userData)
+              .then(() => {
+                knex('users')
+                  .first('*')
+                  .where('user_name', userData.user_name)
+                  .then(data => {
+                      res.cookie('userId', { id: data.id });
+                    return res.status(200).send('Succes');
+                  })
+                  .catch(() => {
+                    return res.status(500).send('DB error');
+                  });
+              })
+              .catch(() => {
+                return res.status(500).send('DB error');
+              });
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  }
 
-userController.RegistPost = (req, res) => {
-  const data = req.body;
-  console.log(data);
-  return res.status(200).send('Succes');
   /*const newUser = {
     userName: req.body.userName,
     userUserName: req.body.userUserName,
@@ -119,6 +148,6 @@ userController.RegistPost = (req, res) => {
       });
   });
   */
-}
+};
 
 module.exports = userController;

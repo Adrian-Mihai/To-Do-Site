@@ -13,7 +13,7 @@
     <table id="7" parent="2" name="knex_migrations"/>
     <table id="8" parent="2" name="knex_migrations_lock"/>
     <table id="9" parent="2" name="todos"/>
-    <table id="10" parent="2" name="user"/>
+    <table id="10" parent="2" name="users"/>
     <column id="11" parent="7" name="id">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
@@ -76,23 +76,19 @@
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="24" parent="10" name="userName">
+    <column id="24" parent="10" name="user_name">
       <Position>2</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <column id="25" parent="10" name="userUserName">
+    <column id="25" parent="10" name="user_email">
       <Position>3</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <column id="26" parent="10" name="userEmail">
+    <column id="26" parent="10" name="user_password">
       <Position>4</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <column id="27" parent="10" name="userPassword">
-      <Position>5</Position>
-      <DataType>varchar(255)|0</DataType>
-    </column>
-    <key id="28" parent="10" name="PRIMARY">
+    <key id="27" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

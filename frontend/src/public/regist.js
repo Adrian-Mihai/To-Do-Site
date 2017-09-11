@@ -6,6 +6,7 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import REQ_HELPER from '../helpers/request';
 import URL_REPO from '../constants/url_repo';
+import APP_CONSTANTS from '../constants/constants';
 
 const styles ={
     card: {
@@ -39,11 +40,13 @@ class regist extends React.Component{
             confirmPassword: '',
         };
         this._handleOnClick = this._handleOnClick.bind(this);
+        this._checkMatch = this._checkMatch.bind(this);
     }
 
 
     render(){
-        const isDisabled = this.state.userName === '' || this.state.password === '' || this.state.email === '' || this.state.confirmPassword === '';
+        const isEmpty = this.state.userName === '' || this.state.password === '' || this.state.email === '' || this.state.confirmPassword === '';
+        const requiredLength = this.state.password.length >= APP_CONSTANTS.passwordLength;
         return(
             <div className='u-fx u-fx-align-center u-fx-justify-center u-height-full'>
                 <Card style={styles.card}>
@@ -94,7 +97,7 @@ class regist extends React.Component{
                         <Button
                             raised
                             color="primary"
-                            disabled={isDisabled}
+                            disabled={isEmpty || !requiredLength || !this._checkMatch()}
                             onClick={this._handleOnClick}
                         >
                             Sign me up
@@ -105,17 +108,24 @@ class regist extends React.Component{
         );
     }
 
+    _checkMatch = () => {
+        if(!this.state.password.localeCompare(this.state.confirmPassword)){
+            return true;
+        }
+        return false;
+    };
+
     _handleOnClick = () =>{
         REQ_HELPER.postWithoutCooki(URL_REPO.BE_REGIST)
             .send({
-                userName: this.state.userName,
-                email: this.state.email,
-                password: this.state.password
+                user_name: this.state.userName,
+                user_email: this.state.email,
+                user_password: this.state.password
             })
-            .then( () =>{
-                console.log('Succes');
-            }).catch(() =>{
-                console.log('Error');
+            .then( (res) =>{
+                console.log(res);
+            }).catch((res) =>{
+                console.log(res);
         });
     }
 }
