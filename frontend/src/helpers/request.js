@@ -7,12 +7,11 @@ const REQ_HELPER = {
             .set('X-API-Key', 'foobar')
             .set('accept', 'json')
     },
-
     putWithoutCooki : url => {
         return request
             .put(url)
-            .set('Content-Type', 'application/json')
-            .set('Accept', 'application/json')
+            .set('X-API-Key', 'foobar')
+            .set('accept', 'json')
     },
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import cookie from 'react-cookies';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
@@ -28,7 +29,7 @@ const styles ={
     }
 };
 
-class regist extends React.Component{
+class Regist extends React.Component{
 
     constructor(props){
         super(props);
@@ -43,9 +44,8 @@ class regist extends React.Component{
         this._checkMatch = this._checkMatch.bind(this);
     }
 
-
     render(){
-        const isEmpty = this.state.userName === '' || this.state.password === '' || this.state.email === '' || this.state.confirmPassword === '';
+        const isEmpty = this.state.userName.trim() === '' || this.state.password.trim() === '' || this.state.email.trim() === '' || this.state.confirmPassword.trim() === '';
         const requiredLength = this.state.password.length >= APP_CONSTANTS.passwordLength;
         return(
             <div className='u-fx u-fx-align-center u-fx-justify-center u-height-full'>
@@ -123,11 +123,12 @@ class regist extends React.Component{
                 user_password: this.state.password
             })
             .then( (res) =>{
-                console.log(res);
-            }).catch((res) =>{
-                console.log(res);
+                cookie.save('userId', res.text, { path: '/' });
+                window.location = URL_REPO.ROOT;
+            }).catch((err) =>{
+                console.log(err);
         });
     }
 }
 
-export default withRouter(regist);
+export default withRouter(Regist);

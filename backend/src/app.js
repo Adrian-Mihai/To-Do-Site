@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors());
 
-app.use('/api/regist', users);
+app.use('/api', users);
+app.use('/api', users);
 
 app.listen(8080);

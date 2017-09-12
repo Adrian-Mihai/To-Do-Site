@@ -1,22 +1,34 @@
 import React from 'react';
 import IconButton from 'material-ui/IconButton';
-import Menu, { MenuItem } from 'material-ui/Menu';
+import Drawer from 'material-ui/Drawer';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import ListSubheader from 'material-ui/List/ListSubheader';
+import HomeIcon from 'material-ui-icons/Home';
 import MenuIcon from 'material-ui-icons/Menu';
 import URL_REPO from "../../constants/url_repo";
 
-class MenuInfo extends React.Component{
+const styles = {
+    list: {
+        width: 250,
+        flex: 'initial',
+    },
+    listSubheader:{
+        fontSize: '18',
+    },
+};
+
+class MainMenu extends React.Component{
 
     constructor(props){
         super(props);
 
         this.state={
-            anchorEl: undefined,
             open: false,
-        }
-        this._handleMenuClick = this._handleMenuClick.bind(this);
-        this._handleRequestClose = this._handleRequestClose.bind(this);
-        this._handleRequestLogIn = this._handleRequestLogIn.bind(this);
-        this._handleRequestRegister = this._handleRequestRegister.bind(this);
+        };
+        this._handleMainMenuOpen = this._handleMainMenuOpen.bind(this);
+        this._handleMainMenuClose = this._handleMainMenuClose.bind(this);
+        this._handleHomeButtonClick = this._handleHomeButtonClick.bind(this);
     }
 
     render(){
@@ -26,45 +38,43 @@ class MenuInfo extends React.Component{
                     aria-label="More"
                     aria-owns="long-menu"
                     aria-haspopup="true"
-                    onClick={this._handleMenuClick}
+                    onClick={this._handleMainMenuOpen}
                     style={{ width: '3rem',color: '#ebebeb' }}
                 >
                     <MenuIcon/>
                 </IconButton>
-                <Menu
-                    id="simple-menu"
-                    anchorEl={this.state.anchorEl}
+                <Drawer
                     open={this.state.open}
-                    onRequestClose={this._handleRequestClose}
+                    onRequestClose={this._handleMainMenuClose}
+                    onClick={this._handleMainMenuClose}
                 >
-                    <MenuItem onClick={this._handleRequestLogIn}>
-                        Sign In
-                    </MenuItem>
-                    <MenuItem onClick={this._handleRequestRegister}>
-                        Sign Up
-                    </MenuItem>
-                </Menu>
+                    <List style={styles.list} subheader={<ListSubheader style={styles.listSubheader}>To Do Site</ListSubheader>}>
+                        <Divider/>
+                        <ListItem button onClick={this._handleHomeButtonClick}>
+                            <ListItemIcon>
+                                <HomeIcon/>
+                            </ListItemIcon>
+                            <ListItemText inset primary= 'Home' />
+                        </ListItem>
+                    </List>
+                </Drawer>
             </div>
         )
     }
 
-    _handleMenuClick(event) {
-        this.setState({ open: true, anchorEl: event.currentTarget });
-    }
-
-    _handleRequestClose = () => {
-        this.setState({ open: false });
+    _handleMainMenuOpen = () => {
+        this.setState({ open: true});
     };
 
-    _handleRequestLogIn() {
-        this.setState({ open: false });
-        window.location = URL_REPO.LOGIN;
-    }
+    _handleMainMenuClose = () => {
+        this.setState({ open: false});
+    };
 
-    _handleRequestRegister(){
-        this.setState({ open: false });
-        window.location = URL_REPO.REGIST;
-    }
+    _handleHomeButtonClick = () =>{
+        this.setState({open: false});
+        window.location = URL_REPO.ROOT;
+    };
+
 }
 
-export default MenuInfo;
+export default MainMenu;

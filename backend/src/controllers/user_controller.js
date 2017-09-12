@@ -5,52 +5,35 @@ const saltRounds = 10;
 
 const userController = {};
 
-userController.LoginGet = (req, res) => {
-  const logError = req.cookies.loginError;
-  res.clearCookie('loginError');
-  res.render('login', { error: logError });
-};
-
-userController.login = (req, res) => {
-  const userIdentification = {
-    userEmail: req.body.userEmail,
-    userPassword: req.body.userPassword,
-  };
-  knex('user')
-    .first('*')
-    .where('userEmail', userIdentification.userEmail)
-    .then(userData => {
-      if (userData) {
-        hash = userData.userPassword;
-        bcrypt.compare(userIdentification.userPassword, hash, function(
-          err,
-          response,
-        ) {
-          if (response) {
-            res.cookie('userID', { id: userData.id });
-            res.redirect('/home');
-          } else {
-            res.cookie('loginError', {
-              wrongData: 'Invalid Email or Password',
+userController.Login = (req, res) => {
+  const userData = req.body;
+  if(usefulFunction.checkNull(userData)){
+    res.status(400).send('Fields cannot be null');
+  }else{
+    knex('users')
+        .first('*')
+        .where('user_name', userData.user_name)
+        .then( data =>{
+          if(data){
+            hash = data.user_password;
+            bcrypt.compare(userData.user_password, hash, (err, response) =>{
+              if(response){
+                return res.status(200).send(data.id.toString());
+              }else{
+                return res.status(400).send('Incorrect password');
+              }
             });
-            res.redirect('/');
+          }else{
+            res.status(400).send('Incorrect name');
           }
-        });
-      } else {
-        res.cookie('loginError', { wrongData: 'Invalid Email or Password' });
-        res.redirect('/');
-      }
+        }).catch(() =>{
+          res.status(500).send('DB error');
     });
+  }
 };
-
-function userLogOut(req, res) {
-  res.clearCookie('userID');
-  res.redirect('/');
-}
 
 userController.Regist = (req, res) => {
   const userData = req.body;
-  console.log(userData);
   if (usefulFunction.checkNull(userData)) {
     return res.status(400).send('Fields cannot be null');
   } else {
@@ -70,8 +53,7 @@ userController.Regist = (req, res) => {
                   .first('*')
                   .where('user_name', userData.user_name)
                   .then(data => {
-                      res.cookie('userId', { id: data.id });
-                    return res.status(200).send('Succes');
+                    return res.status(200).send(data.id.toString());
                   })
                   .catch(() => {
                     return res.status(500).send('DB error');
@@ -83,71 +65,10 @@ userController.Regist = (req, res) => {
           });
         }
       })
-      .catch(err => {
-        console.log(err.message);
+      .catch(() => {
+          return res.status(500).send('DB error');
       });
   }
-
-  /*const newUser = {
-    userName: req.body.userName,
-    userUserName: req.body.userUserName,
-    userEmail: req.body.userEmail,
-    userPassword: req.body.userPassword,
-  };
-  let errors = {};
-  let hasErrors = false;
-  if (newUser.userPassword !== req.body.userConfirmPassword) {
-    errors.passwordError = 'Incorect password';
-    hasErrors = true;
-  }
-  if (req.body.userPassword.length < 6) {
-    errors.passwordLength = 'Password to short';
-    hasErrors = true;
-  }
-  bcrypt.hash(newUser.userPassword, saltRounds, function(err, hash) {
-    knex('user')
-      .first('userName', 'userUserName')
-      .where('userName', newUser.userName)
-      .orWhere('userUserName', newUser.userUserName)
-      .then(userData => {
-        if (userData) {
-          if (userData.userName === newUser.userName) {
-            errors.nameError = 'Invalid Name';
-            hasErrors = true;
-          }
-          if (userData.userUserName === newUser.userUserName) {
-            errors.userError = 'Invalid Username';
-            hasErrors = true;
-          }
-          if (hasErrors) {
-            res.cookie('formErrors', errors);
-            res.redirect('/regist');
-          }
-        } else {
-          if (hasErrors) {
-            res.cookie('formErrors', errors);
-            res.redirect('/regist');
-          } else {
-            newUser.userPassword = hash;
-            knex('user')
-              .insert(newUser)
-              .then(() => {
-                knex('user')
-                  .first('*')
-                  .where('userEmail', newUser.userEmail)
-                  .then(user => {
-                    res.cookie('userID', { id: user.id });
-                    res.redirect('/home');
-                  });
-              })
-              .catch(err => {
-                res.send('Database error: ' + err);
-              });
-          }
-        }
-      });
-  });
-  */
 };
 
 module.exports = userController;
