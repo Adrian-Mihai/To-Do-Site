@@ -7,16 +7,7 @@ import ListSubheader from 'material-ui/List/ListSubheader';
 import HomeIcon from 'material-ui-icons/Home';
 import MenuIcon from 'material-ui-icons/Menu';
 import URL_REPO from "../../constants/url_repo";
-
-const styles = {
-    list: {
-        width: 250,
-        flex: 'initial',
-    },
-    listSubheader:{
-        fontSize: '18',
-    },
-};
+import PUBLIC_PAGE_STYLE from '../style/public_page_style';
 
 class MainMenu extends React.Component{
 
@@ -29,6 +20,7 @@ class MainMenu extends React.Component{
         this._handleMainMenuOpen = this._handleMainMenuOpen.bind(this);
         this._handleMainMenuClose = this._handleMainMenuClose.bind(this);
         this._handleHomeButtonClick = this._handleHomeButtonClick.bind(this);
+        this._handleProjectButtonClick = this._handleProjectButtonClick.bind(this);
     }
 
     render(){
@@ -48,13 +40,16 @@ class MainMenu extends React.Component{
                     onRequestClose={this._handleMainMenuClose}
                     onClick={this._handleMainMenuClose}
                 >
-                    <List style={styles.list} subheader={<ListSubheader style={styles.listSubheader}>To Do Site</ListSubheader>}>
+                    <List style={PUBLIC_PAGE_STYLE.list} subheader={<ListSubheader style={PUBLIC_PAGE_STYLE.listSubheader}>To Do Site</ListSubheader>}>
                         <Divider/>
                         <ListItem button onClick={this._handleHomeButtonClick}>
                             <ListItemIcon>
                                 <HomeIcon/>
                             </ListItemIcon>
                             <ListItemText inset primary= 'Home' />
+                        </ListItem>
+                        <ListItem button onClick={this._handleProjectButtonClick}>
+                            <ListItemText inset primary= 'Project' />
                         </ListItem>
                     </List>
                 </Drawer>
@@ -73,6 +68,11 @@ class MainMenu extends React.Component{
     _handleHomeButtonClick = () =>{
         this.setState({open: false});
         window.location = URL_REPO.ROOT;
+    };
+
+    _handleProjectButtonClick = () =>{
+        this.setState({open: false});
+        window.location = URL_REPO.SHOWPROJECT;
     };
 
 }

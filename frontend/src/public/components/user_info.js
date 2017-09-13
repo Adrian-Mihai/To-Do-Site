@@ -15,7 +15,7 @@ class userInfo extends React.Component{
             anchorEl: undefined,
             open: false,
         };
-
+        this.userInfo = cookie.load('userInfo') ? cookie.load('userInfo') : null;
         this._handleAvatarClick = this._handleAvatarClick.bind(this);
         this._handleRequestClose = this._handleRequestClose.bind(this);
         this._handleLogOut = this._handleLogOut.bind(this);
@@ -32,7 +32,7 @@ class userInfo extends React.Component{
                     style={{ width: '3rem' }}
                 >
                     <div>
-                        <Avatar>A</Avatar>
+                        <Avatar>{this.userInfo.name}</Avatar>
                     </div>
                 </IconButton>
                 <Menu
@@ -59,7 +59,7 @@ class userInfo extends React.Component{
     };
     _handleLogOut = () =>{
         this.setState({ open: false });
-        cookie.remove('userId', { path: '/' });
+        cookie.remove('userInfo', { path: '/' });
         window.location = URL_REPO.ROOT;
     }
 }

@@ -5,28 +5,11 @@ import Card, { CardActions, CardContent } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import Grid from 'material-ui/Grid';
+import AppHeader from './components/app_header';
 import REQ_HELPER from '../helpers/request';
 import URL_REPO from '../constants/url_repo';
-
-const styles ={
-    card: {
-        width: '30rem',
-    },
-    cardContent: {
-        padding: '2rem',
-    },
-    textfield: {
-        width: '100%',
-    },
-    cardActions: {
-        padding: '0 2rem 2rem 2rem',
-        justifyContent: 'flex',
-        height: 'auto',
-    },
-    title: {
-        fontSize: 27,
-    }
-};
+import PUBLIC_PAGE_STYLE from './style/public_page_style';
 
 class Login extends React.Component{
 
@@ -43,14 +26,16 @@ class Login extends React.Component{
     render(){
         const isEmpty = this.state.userName.trim() === '' || this.state.password.trim() === '';
         return(
-            <div className='u-fx u-fx-align-center u-fx-justify-center u-height-full'>
-            <Card style={styles.card}>
-                <CardContent style={styles.cardContent}>
-                    <Typography align='center' type="headline" style={styles.title}>
+            <div>
+                <AppHeader/>
+                <Grid container style={PUBLIC_PAGE_STYLE.root} justify="center">
+            <Card style={PUBLIC_PAGE_STYLE.card}>
+                <CardContent style={PUBLIC_PAGE_STYLE.cardContent}>
+                    <Typography align='center' type="headline" style={PUBLIC_PAGE_STYLE.title}>
                         Sign In
                     </Typography>
                     <TextField
-                        required={true}
+                        required
                         id="name"
                         label="User name"
                         placeholder="Enter your user name"
@@ -70,17 +55,20 @@ class Login extends React.Component{
                         onChange={event => this.setState({ password: event.target.value })}
                     />
                 </CardContent>
-                <CardActions style={styles.cardActions}>
+                <CardActions style={PUBLIC_PAGE_STYLE.cardActions}>
                     <Button
                         raised
                         color="primary"
                         disabled={isEmpty}
                         onClick={this._handleButtonClick}
+                        style={PUBLIC_PAGE_STYLE.button}
                     >
                         Sign me in
                     </Button>
                 </CardActions>
+                <p style={PUBLIC_PAGE_STYLE.paragraph}>You do not have an account?<a href={URL_REPO.REGIST}>Click here</a></p>
             </Card>
+                </Grid>
             </div>
         );
     }
@@ -91,7 +79,8 @@ class Login extends React.Component{
                 user_name: this.state.userName,
                 user_password: this.state.password,
             }).then(res =>{
-                cookie.save('userId', res.text, { path: '/' });
+                cookie.save('userInfo', res.text, { path: '/' });
+                console.log(cookie.load('userInfo'));
                 window.location = URL_REPO.ROOT;
         }).catch(err =>{
             console.log(err);

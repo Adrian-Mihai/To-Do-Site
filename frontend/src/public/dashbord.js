@@ -6,7 +6,9 @@ class dashbord extends React.Component{
 
     render(){
         return(
-            <AppHeader/>
+            <div>
+                <AppHeader/>
+            </div>
         );
     }
 

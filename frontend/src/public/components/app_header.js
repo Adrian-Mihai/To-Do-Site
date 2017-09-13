@@ -8,22 +8,17 @@ import MainMenu from './menu';
 import cookie from 'react-cookies';
 import UserInfo from './user_info';
 import URL_REPO from "../../constants/url_repo";
-
-const style = {
-    text : {
-        flex: 1,
-    },
-};
+import PUBLIC_PAGE_STYLE from '../style/public_page_style';
 
 const AppHeader = props => (
     <AppBar position="static">
         <Toolbar>
             <MainMenu/>
-            <Typography type="title" color="inherit" style={style.text}>
+            <Typography type="title" color="inherit" style={PUBLIC_PAGE_STYLE.text}>
                 To Do
             </Typography>
-            {cookie.load('userId') ? <UserInfo/> : <Button color="contrast" onClick={_handleSingInButtonClick}>Sing In</Button>}
-            {cookie.load('userId') ? null : <Button color="contrast" onClick={_handleSingUpButtonClick}>Sing Up</Button>}
+            {cookie.load('userInfo') ? <UserInfo/> : <Button color="contrast" onClick={_handleSingInButtonClick}>Sing In</Button>}
+            {cookie.load('userInfo') ? null : <Button color="contrast" onClick={_handleSingUpButtonClick}>Sing Up</Button>}
         </Toolbar>
     </AppBar>
 );

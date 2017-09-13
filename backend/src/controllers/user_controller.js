@@ -18,7 +18,11 @@ userController.Login = (req, res) => {
             hash = data.user_password;
             bcrypt.compare(userData.user_password, hash, (err, response) =>{
               if(response){
-                return res.status(200).send(data.id.toString());
+                  let cooki = {
+                      id : data.id.toString(),
+                      name : data.user_name.charAt(0).toUpperCase(),
+                  };
+                  return res.status(200).send(cooki);
               }else{
                 return res.status(400).send('Incorrect password');
               }
@@ -53,7 +57,11 @@ userController.Regist = (req, res) => {
                   .first('*')
                   .where('user_name', userData.user_name)
                   .then(data => {
-                    return res.status(200).send(data.id.toString());
+                      let cooki = {
+                          id : data.id.toString(),
+                          name : data.user_name.charAt(0).toUpperCase(),
+                      };
+                    return res.status(200).send(cooki);
                   })
                   .catch(() => {
                     return res.status(500).send('DB error');

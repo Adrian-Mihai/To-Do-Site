@@ -2,6 +2,7 @@ const URL_REPO = {
     ROOT: '/',
     LOGIN: '/login',
     REGIST: '/regist',
+    SHOWPROJECT: '/projects',
     BE_REGIST: 'http://localhost:8080/api/regist',
     BE_LOGIN: 'http://localhost:8080/api/login',
 };

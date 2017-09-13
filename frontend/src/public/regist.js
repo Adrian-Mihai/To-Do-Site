@@ -5,29 +5,12 @@ import Card, { CardActions, CardContent } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import Grid from 'material-ui/Grid';
 import REQ_HELPER from '../helpers/request';
 import URL_REPO from '../constants/url_repo';
 import APP_CONSTANTS from '../constants/constants';
-
-const styles ={
-    card: {
-        width: '30rem',
-    },
-    cardContent: {
-        padding: '2rem',
-    },
-    textfield: {
-        width: '100%',
-    },
-    cardActions: {
-        padding: '0 2rem 2rem 2rem',
-        justifyContent: 'flex',
-        height: 'auto',
-    },
-    title: {
-        fontSize: 27,
-    }
-};
+import AppHeader from './components/app_header';
+import PUBLIC_PAGE_STYLE from './style/public_page_style';
 
 class Regist extends React.Component{
 
@@ -48,10 +31,12 @@ class Regist extends React.Component{
         const isEmpty = this.state.userName.trim() === '' || this.state.password.trim() === '' || this.state.email.trim() === '' || this.state.confirmPassword.trim() === '';
         const requiredLength = this.state.password.length >= APP_CONSTANTS.passwordLength;
         return(
-            <div className='u-fx u-fx-align-center u-fx-justify-center u-height-full'>
-                <Card style={styles.card}>
-                    <CardContent style={styles.cardContent}>
-                        <Typography align='center' type="headline" style={styles.title}>
+            <div>
+                <AppHeader/>
+                <Grid container style={PUBLIC_PAGE_STYLE.root} justify="center">
+                <Card style={PUBLIC_PAGE_STYLE.card}>
+                    <CardContent style={PUBLIC_PAGE_STYLE.cardContent}>
+                        <Typography align='center' type="headline" style={PUBLIC_PAGE_STYLE.title}>
                             Sign Up
                         </Typography>
                         <TextField
@@ -93,17 +78,19 @@ class Regist extends React.Component{
                             onChange={event => this.setState({ confirmPassword: event.target.value })}
                         />
                     </CardContent>
-                    <CardActions style={styles.cardActions}>
+                    <CardActions style={PUBLIC_PAGE_STYLE.cardActions}>
                         <Button
                             raised
                             color="primary"
                             disabled={isEmpty || !requiredLength || !this._checkMatch()}
                             onClick={this._handleOnClick}
+                            style={PUBLIC_PAGE_STYLE.button}
                         >
                             Sign me up
                         </Button>
                     </CardActions>
                 </Card>
+                </Grid>
             </div>
         );
     }
@@ -123,7 +110,8 @@ class Regist extends React.Component{
                 user_password: this.state.password
             })
             .then( (res) =>{
-                cookie.save('userId', res.text, { path: '/' });
+                cookie.save('userInfo', res.text, { path: '/' });
+                console.log(cookie.load('userInfo'));
                 window.location = URL_REPO.ROOT;
             }).catch((err) =>{
                 console.log(err);
