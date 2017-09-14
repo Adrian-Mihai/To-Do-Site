@@ -6,7 +6,7 @@ class ShowProject extends React.Component{
     render(){
         return(
             <div>
-                <AppHeader/>
+                <AppHeader title="Project"/>
             </div>
         );
     }

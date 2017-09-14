@@ -15,7 +15,7 @@ const AppHeader = props => (
         <Toolbar>
             <MainMenu/>
             <Typography type="title" color="inherit" style={PUBLIC_PAGE_STYLE.text}>
-                To Do
+                {props.title}
             </Typography>
             {cookie.load('userInfo') ? <UserInfo/> : <Button color="contrast" onClick={_handleSingInButtonClick}>Sing In</Button>}
             {cookie.load('userInfo') ? null : <Button color="contrast" onClick={_handleSingUpButtonClick}>Sing Up</Button>}

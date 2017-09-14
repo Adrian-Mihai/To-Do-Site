@@ -8,6 +8,8 @@ import HomeIcon from 'material-ui-icons/Home';
 import MenuIcon from 'material-ui-icons/Menu';
 import URL_REPO from "../../constants/url_repo";
 import PUBLIC_PAGE_STYLE from '../style/public_page_style';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class MainMenu extends React.Component{
 
@@ -21,6 +23,7 @@ class MainMenu extends React.Component{
         this._handleMainMenuClose = this._handleMainMenuClose.bind(this);
         this._handleHomeButtonClick = this._handleHomeButtonClick.bind(this);
         this._handleProjectButtonClick = this._handleProjectButtonClick.bind(this);
+        this._click = this._click.bind(this);
     }
 
     render(){
@@ -48,7 +51,7 @@ class MainMenu extends React.Component{
                             </ListItemIcon>
                             <ListItemText inset primary= 'Home' />
                         </ListItem>
-                        <ListItem button onClick={this._handleProjectButtonClick}>
+                        <ListItem button onClick={this._click}>
                             <ListItemText inset primary= 'Project' />
                         </ListItem>
                     </List>
@@ -68,6 +71,17 @@ class MainMenu extends React.Component{
     _handleHomeButtonClick = () =>{
         this.setState({open: false});
         window.location = URL_REPO.ROOT;
+    };
+
+    _click = () => {
+        confirmAlert({
+            title: 'Go to project page',
+            message: 'You must be Sign In to access this page',
+            confirmLabel: 'Go to Sing In',
+            cancelLabel: 'Cancel',
+            onConfirm: () => this._handleProjectButtonClick(),
+            onCancel: () => {},
+        });
     };
 
     _handleProjectButtonClick = () =>{

@@ -27,7 +27,7 @@ class Login extends React.Component{
         const isEmpty = this.state.userName.trim() === '' || this.state.password.trim() === '';
         return(
             <div>
-                <AppHeader/>
+                <AppHeader title="Sign In"/>
                 <Grid container style={PUBLIC_PAGE_STYLE.root} justify="center">
             <Card style={PUBLIC_PAGE_STYLE.card}>
                 <CardContent style={PUBLIC_PAGE_STYLE.cardContent}>

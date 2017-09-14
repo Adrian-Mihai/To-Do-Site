@@ -7,7 +7,7 @@ class dashbord extends React.Component{
     render(){
         return(
             <div>
-                <AppHeader/>
+                <AppHeader title="To Do"/>
             </div>
         );
     }

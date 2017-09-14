@@ -32,7 +32,7 @@ class Regist extends React.Component{
         const requiredLength = this.state.password.length >= APP_CONSTANTS.passwordLength;
         return(
             <div>
-                <AppHeader/>
+                <AppHeader title="Sign Up"/>
                 <Grid container style={PUBLIC_PAGE_STYLE.root} justify="center">
                 <Card style={PUBLIC_PAGE_STYLE.card}>
                     <CardContent style={PUBLIC_PAGE_STYLE.cardContent}>

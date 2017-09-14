@@ -9,8 +9,8 @@ const styles ={
         padding: '1.5rem 1.5rem 0.5rem 1.5rem',
     },
     cardActions: {
-        padding: '0 0 1rem 1.5rem',
-        justifyContent: 'flex',
+        padding: '0 1.5rem 1rem 1.5rem',
+        justifyContent: 'flex-end',
         height: 'auto',
     },
     title: {
