@@ -4,6 +4,7 @@ import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import ListSubheader from 'material-ui/List/ListSubheader';
+import cookie from 'react-cookies';
 import HomeIcon from 'material-ui-icons/Home';
 import MenuIcon from 'material-ui-icons/Menu';
 import URL_REPO from "../../constants/url_repo";
@@ -22,7 +23,6 @@ class MainMenu extends React.Component{
         this._handleMainMenuOpen = this._handleMainMenuOpen.bind(this);
         this._handleMainMenuClose = this._handleMainMenuClose.bind(this);
         this._handleHomeButtonClick = this._handleHomeButtonClick.bind(this);
-        this._handleProjectButtonClick = this._handleProjectButtonClick.bind(this);
         this._click = this._click.bind(this);
     }
 
@@ -74,19 +74,23 @@ class MainMenu extends React.Component{
     };
 
     _click = () => {
-        confirmAlert({
-            title: 'Go to project page',
-            message: 'You must be Sign In to access this page',
-            confirmLabel: 'Go to Sing In',
-            cancelLabel: 'Cancel',
-            onConfirm: () => this._handleProjectButtonClick(),
-            onCancel: () => {},
-        });
-    };
+        if(cookie.load('userInfo')){
+            this.setState({open: false});
+            window.location = URL_REPO.SHOWPROJECT;
+        }else{
+            confirmAlert({
+                title: 'Go to project page',
+                message: 'You must be Sign In to access this page',
+                confirmLabel: 'Go to Sing In',
+                cancelLabel: 'Cancel',
+                onConfirm: () => {
+                                    this.setState({open: false});
+                                    window.location = URL_REPO.LOGIN;
+                                    },
+                onCancel: () => {},
+            });
+        }
 
-    _handleProjectButtonClick = () =>{
-        this.setState({open: false});
-        window.location = URL_REPO.SHOWPROJECT;
     };
 
 }
