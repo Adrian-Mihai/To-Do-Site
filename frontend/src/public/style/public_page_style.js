@@ -1,6 +1,14 @@
+import blue from 'material-ui/colors/blue';
+import red from 'material-ui/colors/red';
+
 const styles ={
     root: {
         marginTop: 30,
+        flexGrow: 1,
+    },
+    userStyle:{
+      marginTop: '30px',
+      marginLeft: '30px',
     },
     card: {
         width: '19rem',
@@ -31,6 +39,12 @@ const styles ={
     },
     listSubheader:{
         fontSize: '18px',
+    },
+    voteStyle:{
+      color: red[500],
+    },
+    projectStyle:{
+      color: blue[500],
     },
 };
 

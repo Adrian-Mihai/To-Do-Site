@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import AppHeader from '../../public/components/app_header';
 import Grid from 'material-ui/Grid';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
@@ -89,10 +90,11 @@ class AddProject extends React.Component{
                     user_id: userData.id,
             }).then(res =>{
                 window.alert('Project was added');
+                window.location = URL_REPO.SHOW_PROJECT;
         }).catch(err =>{
             console.log(err.message);
         })
     };
 }
 
-export default AddProject;
+export default withRouter(AddProject);

@@ -5,6 +5,7 @@ import Typography from 'material-ui/Typography';
 import EditIcons from 'material-ui-icons/Edit';
 import DeleteIcons from 'material-ui-icons/Delete';
 import IconButton from 'material-ui/IconButton';
+import ViewListIcon from 'material-ui-icons/ViewList';
 import ExpandLess from 'material-ui-icons/ExpandLess';
 import ExpandMore from 'material-ui-icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
@@ -18,8 +19,6 @@ class ProjectFormat extends React.Component{
     this.state = {
       expanded: false,
     };
-
-    this._handleButtonClick = this._handleButtonClick.bind(this);
 	}
 
 	render(){
@@ -39,48 +38,69 @@ class ProjectFormat extends React.Component{
           <Typography
             align='right'
           >
-          Status: {this.props.status}
+            Status
           </Typography>
-          <Typography>
+          {
+            this.props.status === 'In work' ? <Typography
+                                                align= 'right'
+                                                style={PRIVATE_PAGE_STYLE.statusInWork}
+                                              >
+                                                {this.props.status}
+                                              </Typography> : <Typography
+                                                                align= 'right'
+                                                                style={PRIVATE_PAGE_STYLE.statusDone}
+                                                              >
+                                                                {this.props.status}
+                                                              </Typography>   
+          }
+          <Typography type="body2">
             Description:
           </Typography>
           <Typography noWrap>
             {this.props.description}
-          </Typography>
-          {descriptionLength > maxLength ? 
-            <div>
-              <IconButton
-                onClick={() =>{this.setState({expanded: !this.state.expanded})}}
-                aria-expanded={this.state.expanded}
-                aria-label="Show more"
-                style={PRIVATE_PAGE_STYLE.showMore}
-              >
-            {this.state.expanded ? <ExpandLess/> : <ExpandMore/>}
-          </IconButton>
-            </div> : null}
+          </Typography>  
+          {
+            descriptionLength > maxLength ? <IconButton
+                                              onClick={() =>{this.setState({expanded: !this.state.expanded})}}
+                                              aria-expanded={this.state.expanded}
+                                              aria-label="Show more"
+                                              style={PRIVATE_PAGE_STYLE.showMore}
+                                            >
+                                              {this.state.expanded ? <ExpandLess/> : <ExpandMore/>}
+                                            </IconButton> : null
+          }
           </CardContent>
            <Collapse in={this.state.expanded} transitionDuration="auto" unmountOnExit>
             <CardContent>
-              <Typography paragraph>
-               {this.props.description}
-              </Typography>
+            <Typography type="body2">
+              Description:
+            </Typography>
+            <Typography paragraph>
+             {this.props.description}
+            </Typography>
             </CardContent>
            </Collapse>
           <CardActions style={PRIVATE_PAGE_STYLE.cardActions}>
           <IconButton>
-            <EditIcons/>
+            <ViewListIcon
+              style={PRIVATE_PAGE_STYLE.taskStyle}
+            />
           </IconButton>
           <IconButton>
-            <DeleteIcons/>
+            <EditIcons
+              style={PRIVATE_PAGE_STYLE.EditButtonStyle}
+            />
+          </IconButton>
+          <IconButton>
+            <DeleteIcons
+              style={PRIVATE_PAGE_STYLE.DeleteButtonStyle}
+            />
           </IconButton>
           </CardActions>
         </Card>
 			</div>
-		);
-	}
-  _handleButtonClick = () =>{
-    console.log(this.props);
-  }
+		)
+  };
 }
 
 export default ProjectFormat;

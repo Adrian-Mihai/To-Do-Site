@@ -79,4 +79,23 @@ userController.Regist = (req, res) => {
   }
 };
 
+userController.getAll = (req, res) =>{
+  knex('users')
+    .select('*')
+    .then(response =>{
+      let data = [];
+      for(let i= 0; i< response.length; i++){
+        let userInfo = {};
+        userInfo.id = response[i].id;
+        userInfo.name = response[i].user_name;
+        userInfo.email = response[i].user_email;
+        data[i] = userInfo;
+      }
+      return res.status(200).send(data);    
+    }).catch(err =>{
+      console.log(err.message);
+      return res.status(400).send(err.message);
+    });
+}
+
 module.exports = userController;

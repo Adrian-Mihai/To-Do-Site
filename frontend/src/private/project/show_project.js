@@ -25,16 +25,24 @@ class ShowProject extends React.Component{
         return(
             <div>
                 <AppHeader title="Project"/>
-                <Grid container style={PRIVATE_PAGE_STYLE.root} justify="center">
-                {this.state.projects.map( project =>(
-                  <Grid key={project.id} style={PRIVATE_PAGE_STYLE.projectStyle}>
-                    <ProjectFormat
-                      title={project.project_title}
-                      description={project.project_description}
-                      status = {project.project_status}
-                    />
-                  </Grid>
-                  ))}
+                <Grid
+                  container
+                  style={PRIVATE_PAGE_STYLE.root}
+                  justify="center"
+                >
+                  {
+                    this.state.projects.map( project =>(<Grid
+                                                          key={project.id}
+                                                          style={PRIVATE_PAGE_STYLE.projectStyle}
+                                                        >
+                                                          <ProjectFormat
+                                                            title={project.project_title}
+                                                            description={project.project_description}
+                                                            status = {project.project_status}
+                                                          />
+                                                        </Grid>
+                                                        ))
+                  }
                 </Grid>            
             </div>
         );

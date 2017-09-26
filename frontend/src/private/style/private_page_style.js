@@ -1,3 +1,6 @@
+import red from 'material-ui/colors/red';
+import green from 'material-ui/colors/green';
+import blue from 'material-ui/colors/blue';
 const style = {
     menuNestedList:{
         paddingLeft: '68px',
@@ -19,7 +22,7 @@ const style = {
     cardContent: {
         padding: '1.5rem 1.5rem 0.5rem 1.5rem',
         height: 'auto',
-        minHeight: '175px',
+        minHeight: '195px',
     },
     cardActions: {
         padding: '0 1.5rem 1rem 1.5rem',
@@ -35,7 +38,22 @@ const style = {
     showMore:{
       width: '-webkit-fill-available',
       marginLeft: '400px',
-    }
+    },
+    statusDone:{
+      color: red[500],
+    },
+    statusInWork:{
+      color: green[500],
+    },
+    EditButtonStyle:{
+      color: green[500],
+    },
+    DeleteButtonStyle:{
+      color: red[500],
+    },
+    taskStyle:{
+      color: blue[500],
+    },
 };
 
 export default style;
