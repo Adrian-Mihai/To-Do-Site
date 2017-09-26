@@ -13,6 +13,13 @@ const REQ_HELPER = {
             .set('X-API-Key', 'foobar')
             .set('accept', 'json')
     },
+    getWithCooki: url =>{
+        return request
+            .get(url)
+            .set('X-API-Key', 'foobar')
+            .set('accept', 'json')
+            .withCredentials()
+    },
 };
 
 export default REQ_HELPER;

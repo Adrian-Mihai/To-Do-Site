@@ -80,8 +80,7 @@ class Login extends React.Component{
                 user_password: this.state.password,
             }).then(res =>{
                 cookie.save('userInfo', res.text, { path: '/' });
-                console.log(cookie.load('userInfo'));
-                window.location = URL_REPO.ROOT;
+                window.location = URL_REPO.SHOW_PROJECT;
         }).catch(err =>{
             console.log(err);
         })

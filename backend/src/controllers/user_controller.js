@@ -8,7 +8,7 @@ const userController = {};
 userController.Login = (req, res) => {
   const userData = req.body;
   if(usefulFunction.checkNull(userData)){
-    res.status(400).send('Fields cannot be null');
+    return res.status(400).send('Fields cannot be null');
   }else{
     knex('users')
         .first('*')
@@ -46,7 +46,7 @@ userController.Regist = (req, res) => {
       .where('user_name', userData.user_name)
       .then(data => {
         if (data) {
-          res.status(400).send('User name already exist');
+          return res.status(400).send('User name already exist');
         } else {
           bcrypt.hash(userData.user_password, saltRounds, (err, hash) => {
             userData.user_password = hash;

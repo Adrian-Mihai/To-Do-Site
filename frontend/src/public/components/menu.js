@@ -9,6 +9,12 @@ import HomeIcon from 'material-ui-icons/Home';
 import MenuIcon from 'material-ui-icons/Menu';
 import URL_REPO from "../../constants/url_repo";
 import PUBLIC_PAGE_STYLE from '../style/public_page_style';
+import PRIVATE_PAGE_STYLE from '../../private/style/private_page_style';
+import ExpandLess from 'material-ui-icons/ExpandLess';
+import ExpandMore from 'material-ui-icons/ExpandMore';
+import ViewListIcon from 'material-ui-icons/ViewList';
+import Collapse from 'material-ui/transitions/Collapse';
+import AddIcon from 'material-ui-icons/Add';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
@@ -19,11 +25,12 @@ class MainMenu extends React.Component{
 
         this.state={
             open: false,
+            openList: false,
         };
-        this._handleMainMenuOpen = this._handleMainMenuOpen.bind(this);
-        this._handleMainMenuClose = this._handleMainMenuClose.bind(this);
+        this._handleMainMenuButtonClick = this._handleMainMenuButtonClick.bind(this);
         this._handleHomeButtonClick = this._handleHomeButtonClick.bind(this);
-        this._click = this._click.bind(this);
+        this._handleProjectButtonClick = this._handleProjectButtonClick.bind(this);
+        this._handleAddProjectButtonClick = this._handleAddProjectButtonClick.bind(this);
     }
 
     render(){
@@ -33,66 +40,90 @@ class MainMenu extends React.Component{
                     aria-label="More"
                     aria-owns="long-menu"
                     aria-haspopup="true"
-                    onClick={this._handleMainMenuOpen}
+                    onClick={this._handleMainMenuButtonClick}
                     style={{ width: '3rem',color: '#ebebeb' }}
                 >
                     <MenuIcon/>
                 </IconButton>
                 <Drawer
                     open={this.state.open}
-                    onRequestClose={this._handleMainMenuClose}
-                    onClick={this._handleMainMenuClose}
+                    onRequestClose={this._handleMainMenuButtonClick}
                 >
                     <List style={PUBLIC_PAGE_STYLE.list} subheader={<ListSubheader style={PUBLIC_PAGE_STYLE.listSubheader}>To Do Site</ListSubheader>}>
                         <Divider/>
                         <ListItem button onClick={this._handleHomeButtonClick}>
                             <ListItemIcon>
-                                <HomeIcon/>
+                                <HomeIcon style={PRIVATE_PAGE_STYLE.icons}/>
                             </ListItemIcon>
                             <ListItemText inset primary= 'Home' />
                         </ListItem>
-                        <ListItem button onClick={this._click}>
+                        <ListItem button onClick={this._handleProjectButtonClick}>
+                            <ListItemIcon>
+                                <ViewListIcon style={PRIVATE_PAGE_STYLE.icons}/>
+                            </ListItemIcon>
                             <ListItemText inset primary= 'Project' />
+                            {this.state.openList ? <ExpandLess/> : <ExpandMore/>}
                         </ListItem>
+                        <Collapse
+                            in={this.state.openList}
+                            transitionDuration='auto'
+                            unmountOnExit
+                        >
+                            <ListItem
+                                button
+                                onClick={this._handleAddProjectButtonClick}
+                                style={PRIVATE_PAGE_STYLE.menuNestedList}
+                            >
+                                <ListItemIcon>
+                                    <AddIcon style={PRIVATE_PAGE_STYLE.icons}/>
+                                </ListItemIcon>
+                                <ListItemText inset primary='Add Project'/>
+                            </ListItem>
+                        </Collapse>
                     </List>
                 </Drawer>
             </div>
         )
     }
 
-    _handleMainMenuOpen = () => {
-        this.setState({ open: true});
-    };
-
-    _handleMainMenuClose = () => {
-        this.setState({ open: false});
+    _handleMainMenuButtonClick = () => {
+        this.setState({ open: !this.state.open});
     };
 
     _handleHomeButtonClick = () =>{
         this.setState({open: false});
-        window.location = URL_REPO.ROOT;
+        if(cookie.load('userInfo')){
+            window.location = URL_REPO.SHOW_PROJECT;
+        }else{
+            window.location = URL_REPO.ROOT;
+        }
     };
 
-    _click = () => {
+    _handleProjectButtonClick = () => {
+        this.setState({
+            openList: !this.state.openList,
+        });
+    };
+
+    _handleAddProjectButtonClick = () =>{
+        this.setState({
+            open: !this.state.open,
+        });
         if(cookie.load('userInfo')){
-            this.setState({open: false});
-            window.location = URL_REPO.SHOWPROJECT;
+            window.location = URL_REPO.ADD_PROJECT;
         }else{
             confirmAlert({
-                title: 'Go to project page',
+                title: 'Unauthorized access!!!',
                 message: 'You must be Sign In to access this page',
                 confirmLabel: 'Go to Sing In',
                 cancelLabel: 'Cancel',
-                onConfirm: () => {
-                                    this.setState({open: false});
+                onConfirm: () =>{
                                     window.location = URL_REPO.LOGIN;
-                                    },
-                onCancel: () => {},
+                                },
+                onCancel: () =>{},
             });
         }
-
-    };
-
+    }
 }
 
 export default MainMenu;

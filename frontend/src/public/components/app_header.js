@@ -17,8 +17,10 @@ const AppHeader = props => (
             <Typography type="title" color="inherit" style={PUBLIC_PAGE_STYLE.text}>
                 {props.title}
             </Typography>
-            {cookie.load('userInfo') ? <UserInfo/> : <Button color="contrast" onClick={_handleSingInButtonClick}>Sing In</Button>}
-            {cookie.load('userInfo') ? null : <Button color="contrast" onClick={_handleSingUpButtonClick}>Sing Up</Button>}
+            {cookie.load('userInfo') ? <UserInfo/> : <div>
+                <Button color="contrast" onClick={_handleSingInButtonClick}>Sing In</Button>
+                <Button color="contrast" onClick={_handleSingUpButtonClick}>Sing Up</Button>
+            </div>}
         </Toolbar>
     </AppBar>
 );
