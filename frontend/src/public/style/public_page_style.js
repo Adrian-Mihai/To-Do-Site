@@ -15,6 +15,7 @@ const styles ={
     },
     cardContent: {
         padding: '1.5rem 1.5rem 0.5rem 1.5rem',
+        height: 'auto',
     },
     cardActions: {
         padding: '0 1.5rem 1rem 1.5rem',
@@ -45,6 +46,16 @@ const styles ={
     },
     projectStyle:{
       color: blue[500],
+    },
+    selectStyle:{
+      marginTop: '25px',
+    },
+    inputLabelStyle:{
+      marginRight: '10px',
+    },
+    showMore:{
+      width: '-webkit-fill-available',
+      marginLeft: '236px',
     },
 };
 

@@ -38,6 +38,7 @@ userController.Login = (req, res) => {
 
 userController.Regist = (req, res) => {
   const userData = req.body;
+  userData.user_point = 0;
   if (usefulFunction.checkNull(userData)) {
     return res.status(400).send('Fields cannot be null');
   } else {
@@ -63,18 +64,21 @@ userController.Regist = (req, res) => {
                       };
                     return res.status(200).send(cooki);
                   })
-                  .catch(() => {
-                    return res.status(500).send('DB error');
+                  .catch(err => {
+                    console.log(err.message);
+                    return res.status(500).send(err.message);
                   });
               })
-              .catch(() => {
-                return res.status(500).send('DB error');
+              .catch(err => {
+                console.log(err.message)
+                return res.status(500).send(err.message);
               });
           });
         }
       })
-      .catch(() => {
-          return res.status(500).send('DB error');
+      .catch(err => {
+          console.log(err.message);
+          return res.status(500).send(err.message);
       });
   }
 };
@@ -82,6 +86,7 @@ userController.Regist = (req, res) => {
 userController.getAll = (req, res) =>{
   knex('users')
     .select('*')
+    .where('user_visibility', 'Public')
     .then(response =>{
       let data = [];
       for(let i= 0; i< response.length; i++){
@@ -89,6 +94,7 @@ userController.getAll = (req, res) =>{
         userInfo.id = response[i].id;
         userInfo.name = response[i].user_name;
         userInfo.email = response[i].user_email;
+        userInfo.description = response[i].user_description;
         data[i] = userInfo;
       }
       return res.status(200).send(data);    
@@ -96,6 +102,22 @@ userController.getAll = (req, res) =>{
       console.log(err.message);
       return res.status(400).send(err.message);
     });
-}
+};
+
+userController.getPoints = (req, res) =>{
+  knex('projects')
+    .select('project_point')
+    .where('user_id', req.params.id)
+    .then(response =>{
+      let result = 0;
+      for(let i = 0; i< response.length; i++){
+        result += response[i].project_point;
+      }
+      return res.status(200).send(result.toString());
+    }).catch(err =>{
+      console.log(err.message);
+      return res.status(400).send(err.message);
+    })
+};
 
 module.exports = userController;

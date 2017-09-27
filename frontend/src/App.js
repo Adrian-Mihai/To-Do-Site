@@ -15,7 +15,7 @@ class App extends Component {
       <Router>
           <main className='u-fx u-fx-column'>
               <Switch>
-                  <PrivateRoute exact path={URL_REPO.SHOW_PROJECT} component={ShowProject}/>
+                  <Route exact path={`${URL_REPO.SHOW_PROJECT}/:id`} component={ShowProject}/>
                   <PrivateRoute exact path={URL_REPO.ADD_PROJECT} component={AddProject}/>
                   <Route exact path={URL_REPO.ROOT} component={Dashbord} />
                   <Route exact path={URL_REPO.LOGIN} component={Login} />

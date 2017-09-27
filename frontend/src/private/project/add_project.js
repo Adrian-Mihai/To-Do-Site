@@ -90,7 +90,7 @@ class AddProject extends React.Component{
                     user_id: userData.id,
             }).then(res =>{
                 window.alert('Project was added');
-                window.location = URL_REPO.SHOW_PROJECT;
+                window.location = `${URL_REPO.SHOW_PROJECT}/${userData.id}`;
         }).catch(err =>{
             console.log(err.message);
         })

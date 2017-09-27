@@ -6,12 +6,14 @@ const REQ_HELPER = {
             .post(url)
             .set('X-API-Key', 'foobar')
             .set('accept', 'json')
+            .withCredentials()
     },
     putWithoutCooki : url => {
         return request
             .put(url)
             .set('X-API-Key', 'foobar')
             .set('accept', 'json')
+            .withCredentials()
     },
     getWithCooki: url =>{
         return request

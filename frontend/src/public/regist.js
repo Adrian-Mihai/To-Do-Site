@@ -10,7 +10,12 @@ import REQ_HELPER from '../helpers/request';
 import URL_REPO from '../constants/url_repo';
 import APP_CONSTANTS from '../constants/constants';
 import AppHeader from './components/app_header';
+import Input, { InputLabel } from 'material-ui/Input';
+import { MenuItem } from 'material-ui/Menu';
+import Select from 'material-ui/Select';
 import PUBLIC_PAGE_STYLE from './style/public_page_style';
+
+const variants = ['Private', 'Public'];
 
 class Regist extends React.Component{
 
@@ -22,14 +27,19 @@ class Regist extends React.Component{
             email: '',
             password: '',
             confirmPassword: '',
+            visibility: '',
+            description: 'null',
+            publicSelect: false,
         };
         this._handleOnClick = this._handleOnClick.bind(this);
         this._checkMatch = this._checkMatch.bind(this);
+        this._handleChange = this._handleChange.bind(this);
     }
 
     render(){
-        const isEmpty = this.state.userName.trim() === '' || this.state.password.trim() === '' || this.state.email.trim() === '' || this.state.confirmPassword.trim() === '';
+        const isEmpty = this.state.userName.trim() === '' || this.state.password.trim() === '' || this.state.email.trim() === '' || this.state.confirmPassword.trim() === '' || this.state.visibility === '';
         const requiredLength = this.state.password.length >= APP_CONSTANTS.passwordLength;
+        const visibilityVerification = this.state.visibility === 'Public' && this.state.description.trim() === '' ? true : false;
         return(
             <div>
                 <AppHeader title="Sign Up"/>
@@ -58,6 +68,38 @@ class Regist extends React.Component{
                             fullWidth
                             onChange={event => this.setState({ email: event.target.value })}
                         />
+                        <InputLabel 
+                          style={PUBLIC_PAGE_STYLE.inputLabelStyle}
+                        >
+                          Visibility:
+                        </InputLabel>
+                        <Select
+                          value ={this.state.visibility}
+                          onChange={this._handleChange}
+                          input={<Input style={PUBLIC_PAGE_STYLE.selectStyle}/>}
+                        >
+                          {
+                            variants.map((item, index) =>(<MenuItem
+                                                            key={index}
+                                                            value={item}
+                                                          >
+                                                            {item}
+                                                          </MenuItem>
+                                                          ))
+                          }
+                        </Select>
+                        {
+                          this.state.publicSelect ? <TextField
+                                                      required
+                                                      id="description"
+                                                      label="Description"
+                                                      multiline
+                                                      rowsMax="5"
+                                                      onChange={event => this.setState({ description: event.target.value })}
+                                                      margin="normal"
+                                                      fullWidth
+                                                    /> : null
+                        }
                         <TextField
                             required={true}
                             id="password"
@@ -82,7 +124,7 @@ class Regist extends React.Component{
                         <Button
                             raised
                             color="primary"
-                            disabled={isEmpty || !requiredLength || !this._checkMatch()}
+                            disabled={isEmpty || !requiredLength || !this._checkMatch() || visibilityVerification}
                             onClick={this._handleOnClick}
                             style={PUBLIC_PAGE_STYLE.button}
                         >
@@ -102,20 +144,40 @@ class Regist extends React.Component{
         return false;
     };
 
+    _handleChange = event =>{
+      this.setState({
+        visibility: event.target.value,
+      }, () =>{
+        if(this.state.visibility === 'Public'){
+          this.setState({
+            publicSelect: true,
+          })
+        }else{
+          this.setState({
+            publicSelect: false,
+            description: 'null',
+          })
+        }
+      })
+    };
+
     _handleOnClick = () =>{
         REQ_HELPER.postWithoutCooki(URL_REPO.BE_REGIST)
             .send({
                 user_name: this.state.userName,
                 user_email: this.state.email,
-                user_password: this.state.password
+                user_password: this.state.password,
+                user_visibility: this.state.visibility,
+                user_description: this.state.description,
             })
             .then( (res) =>{
                 cookie.save('userInfo', res.text, { path: '/' });
-                window.location = URL_REPO.SHOW_PROJECT;
+                window.location = URL_REPO.ROOT;
             }).catch((err) =>{
                 console.log(err);
         });
-    }
+    };
 }
+
 
 export default withRouter(Regist);

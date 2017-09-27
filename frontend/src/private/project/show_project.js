@@ -36,9 +36,12 @@ class ShowProject extends React.Component{
                                                           style={PRIVATE_PAGE_STYLE.projectStyle}
                                                         >
                                                           <ProjectFormat
+                                                            id={project.id}
+                                                            userId={project.user_id}
                                                             title={project.project_title}
                                                             description={project.project_description}
                                                             status = {project.project_status}
+                                                            points = {project.project_point}
                                                           />
                                                         </Grid>
                                                         ))
@@ -49,7 +52,8 @@ class ShowProject extends React.Component{
     }
 
     _getProject = () =>{
-      REQ_HELPER.getWithCooki(URL_REPO.BE_SHOW_PROJECT)
+      const id = this.props.match.params.id;
+      REQ_HELPER.getWithCooki(`${URL_REPO.BE_SHOW_PROJECT}/${id}`)
         .then(response =>{
           this.setState({
             projects: response.body,

@@ -92,11 +92,7 @@ class MainMenu extends React.Component{
 
     _handleHomeButtonClick = () =>{
         this.setState({open: false});
-        if(cookie.load('userInfo')){
-            window.location = URL_REPO.SHOW_PROJECT;
-        }else{
-            window.location = URL_REPO.ROOT;
-        }
+        window.location = URL_REPO.ROOT;
     };
 
     _handleProjectButtonClick = () => {

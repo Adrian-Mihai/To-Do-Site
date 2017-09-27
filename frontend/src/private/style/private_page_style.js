@@ -54,6 +54,9 @@ const style = {
     taskStyle:{
       color: blue[500],
     },
+    voteStyle:{
+      color: red[500],
+    },
 };
 
 export default style;

@@ -4,6 +4,9 @@ exports.up = function(knex, Promise) {
     table.string('user_name');
     table.string('user_email');
     table.string('user_password');
+    table.string('user_visibility');
+    table.text('user_description');
+    table.integer('user_point');
   });
 };
 

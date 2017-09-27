@@ -1,14 +1,18 @@
 import React from 'react';
-import Card, { CardContent, CardActions } from 'material-ui/Card';
-import Button from 'material-ui/Button';
+import cookie from 'react-cookies';
+import Card, {CardContent, CardActions } from 'material-ui/Card';
+import { InputLabel } from 'material-ui/Input';
 import Typography from 'material-ui/Typography';
 import EditIcons from 'material-ui-icons/Edit';
 import DeleteIcons from 'material-ui-icons/Delete';
 import IconButton from 'material-ui/IconButton';
 import ViewListIcon from 'material-ui-icons/ViewList';
+import FavoriteIcon from 'material-ui-icons/Favorite';
 import ExpandLess from 'material-ui-icons/ExpandLess';
 import ExpandMore from 'material-ui-icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
+import REQ_HELPER from '../../helpers/request';
+import URL_REPO from '../../constants/url_repo';
 import PRIVATE_PAGE_STYLE from '../style/private_page_style';
 
 class ProjectFormat extends React.Component{
@@ -18,12 +22,21 @@ class ProjectFormat extends React.Component{
 
     this.state = {
       expanded: false,
+      points: 0,
     };
+
+    this._handleVote = this._handleVote.bind(this);
+    this._getPoints = this._getPoints.bind(this);
 	}
+
+  componentDidMount(){
+    this._getPoints();
+  }
 
 	render(){
     const descriptionLength = this.props.description.length;
     const maxLength = 58;
+    const id = cookie.load('userInfo') ? parseInt(cookie.load('userInfo').id) : undefined;
 		return(
 			<div>
         <Card style={PRIVATE_PAGE_STYLE.card}>
@@ -81,26 +94,69 @@ class ProjectFormat extends React.Component{
             </CardContent>
            </Collapse>
           <CardActions style={PRIVATE_PAGE_STYLE.cardActions}>
-          <IconButton>
-            <ViewListIcon
-              style={PRIVATE_PAGE_STYLE.taskStyle}
-            />
-          </IconButton>
-          <IconButton>
-            <EditIcons
-              style={PRIVATE_PAGE_STYLE.EditButtonStyle}
-            />
-          </IconButton>
-          <IconButton>
-            <DeleteIcons
-              style={PRIVATE_PAGE_STYLE.DeleteButtonStyle}
-            />
-          </IconButton>
+          <InputLabel>{this.state.points}</InputLabel>
+          {
+            cookie.load('userInfo') ? <IconButton
+                                        onClick={this._handleVote}
+                                      >
+                                        <FavoriteIcon
+                                          style={PRIVATE_PAGE_STYLE.voteStyle}
+                                        />
+                                     </IconButton>  : <FavoriteIcon
+                                                        style={PRIVATE_PAGE_STYLE.voteStyle}
+                                                      />
+          }
+          {
+            id === this.props.userId ?  <div>
+                                    <IconButton>
+                                      <EditIcons
+                                        style={PRIVATE_PAGE_STYLE.EditButtonStyle}
+                                      />
+                                    </IconButton>
+                                    <IconButton>
+                                      <DeleteIcons
+                                        style={PRIVATE_PAGE_STYLE.DeleteButtonStyle}
+                                      />
+                                    </IconButton>
+                                    <IconButton>
+                                      <ViewListIcon
+                                        style={PRIVATE_PAGE_STYLE.taskStyle}
+                                      />
+                                    </IconButton>
+                                  </div>  :  null 
+          }
           </CardActions>
         </Card>
 			</div>
 		)
   };
+
+  _getPoints = () =>{
+    this.setState({
+      points: this.props.points,
+    });
+  }
+
+  _handleVote = () =>{
+    const id = cookie.load('userInfo') ? parseInt(cookie.load('userInfo').id) : undefined;
+    if(id !== this.props.userId){
+      this.setState({
+        points: this.state.points + 1,
+      }, () =>{
+        REQ_HELPER.putWithoutCooki(`${URL_REPO.BE_VOTE_PROJECT}/${this.props.id}`)
+          .send({
+            points: this.state.points,
+          })
+          .then(respone =>{
+            console.log(respone);
+          }).catch(err =>{
+            console.log(err.message);
+          })
+      })
+    }
+  };
+
+
 }
 
 export default ProjectFormat;

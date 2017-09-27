@@ -38,9 +38,10 @@ class dashbord extends React.Component{
                                                 style={PUBLIC_PAGE_STYLE.userStyle}
                                             >
                                             <UserFormat 
-                                              key={user.id}
+                                              id={user.id}
                                               name={user.name}
                                               email={user.email}
+                                              description={user.description}
                                             />
                                             </Grid>
                                             ))
