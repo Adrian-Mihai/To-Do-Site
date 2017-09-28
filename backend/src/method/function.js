@@ -11,6 +11,7 @@ usefulFunction.checkNull = data => {
   return false;
 };
 
+
 /*function autorize(req, res, next) {
   if (req.cookies.userID) {
     knex('user')

@@ -92,7 +92,7 @@ class AddProject extends React.Component{
                 window.alert('Project was added');
                 window.location = `${URL_REPO.SHOW_PROJECT}/${userData.id}`;
         }).catch(err =>{
-            console.log(err.message);
+            window.alert('Project name already exist');
         })
     };
 }

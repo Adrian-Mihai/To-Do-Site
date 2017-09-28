@@ -15,8 +15,7 @@ import ExpandMore from 'material-ui-icons/ExpandMore';
 import ViewListIcon from 'material-ui-icons/ViewList';
 import Collapse from 'material-ui/transitions/Collapse';
 import AddIcon from 'material-ui-icons/Add';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+
 
 class MainMenu extends React.Component{
 
@@ -31,9 +30,11 @@ class MainMenu extends React.Component{
         this._handleHomeButtonClick = this._handleHomeButtonClick.bind(this);
         this._handleProjectButtonClick = this._handleProjectButtonClick.bind(this);
         this._handleAddProjectButtonClick = this._handleAddProjectButtonClick.bind(this);
+        this._handleShowProjectButtonClick = this._handleShowProjectButtonClick.bind(this);
     }
 
     render(){
+      const id = cookie.load('userInfo') ? parseInt(cookie.load('userInfo').id, 10) : undefined;
         return (
             <div>
                 <IconButton
@@ -57,29 +58,43 @@ class MainMenu extends React.Component{
                             </ListItemIcon>
                             <ListItemText inset primary= 'Home' />
                         </ListItem>
-                        <ListItem button onClick={this._handleProjectButtonClick}>
-                            <ListItemIcon>
-                                <ViewListIcon style={PRIVATE_PAGE_STYLE.icons}/>
-                            </ListItemIcon>
-                            <ListItemText inset primary= 'Project' />
-                            {this.state.openList ? <ExpandLess/> : <ExpandMore/>}
-                        </ListItem>
-                        <Collapse
-                            in={this.state.openList}
-                            transitionDuration='auto'
-                            unmountOnExit
-                        >
-                            <ListItem
-                                button
-                                onClick={this._handleAddProjectButtonClick}
-                                style={PRIVATE_PAGE_STYLE.menuNestedList}
-                            >
-                                <ListItemIcon>
-                                    <AddIcon style={PRIVATE_PAGE_STYLE.icons}/>
-                                </ListItemIcon>
-                                <ListItemText inset primary='Add Project'/>
-                            </ListItem>
-                        </Collapse>
+                        {
+                          id ? <div>
+                                  <ListItem button onClick={this._handleProjectButtonClick}>
+                                    <ListItemIcon>
+                                      <ViewListIcon style={PRIVATE_PAGE_STYLE.icons}/>
+                                    </ListItemIcon>
+                                    <ListItemText inset primary= 'Project' />
+                                      {this.state.openList ? <ExpandLess/> : <ExpandMore/>}
+                                  </ListItem>
+                                  <Collapse
+                                    in={this.state.openList}
+                                    transitionDuration='auto'
+                                    unmountOnExit
+                                  >
+                                    <ListItem
+                                      button
+                                      onClick={this._handleShowProjectButtonClick}
+                                      style={PRIVATE_PAGE_STYLE.menuNestedList}
+                                    >
+                                      <ListItemIcon>
+                                        <MenuIcon style={PRIVATE_PAGE_STYLE.icons}/>
+                                      </ListItemIcon>
+                                      <ListItemText inset primary='Show Project'/>
+                                    </ListItem>
+                                    <ListItem
+                                      button
+                                      onClick={this._handleAddProjectButtonClick}
+                                      style={PRIVATE_PAGE_STYLE.menuNestedList}
+                                    >
+                                      <ListItemIcon>
+                                        <AddIcon style={PRIVATE_PAGE_STYLE.icons}/>
+                                      </ListItemIcon>
+                                      <ListItemText inset primary='Add Project'/>
+                                    </ListItem>
+                                  </Collapse>
+                              </div> : null
+                        }
                     </List>
                 </Drawer>
             </div>
@@ -101,25 +116,20 @@ class MainMenu extends React.Component{
         });
     };
 
+    _handleShowProjectButtonClick = () =>{
+      const id = cookie.load('userInfo').id;
+      this.setState({
+            open: !this.state.open,
+        });
+        window.location = `${URL_REPO.SHOW_PROJECT}/${id}`;
+    };
+
     _handleAddProjectButtonClick = () =>{
         this.setState({
             open: !this.state.open,
         });
-        if(cookie.load('userInfo')){
-            window.location = URL_REPO.ADD_PROJECT;
-        }else{
-            confirmAlert({
-                title: 'Unauthorized access!!!',
-                message: 'You must be Sign In to access this page',
-                confirmLabel: 'Go to Sing In',
-                cancelLabel: 'Cancel',
-                onConfirm: () =>{
-                                    window.location = URL_REPO.LOGIN;
-                                },
-                onCancel: () =>{},
-            });
-        }
-    }
+      window.location = URL_REPO.ADD_PROJECT;
+    };
 }
 
 export default MainMenu;

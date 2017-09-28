@@ -174,7 +174,7 @@ class Regist extends React.Component{
                 cookie.save('userInfo', res.text, { path: '/' });
                 window.location = URL_REPO.ROOT;
             }).catch((err) =>{
-                console.log(err);
+                window.alert('User name already exist');
         });
     };
 }

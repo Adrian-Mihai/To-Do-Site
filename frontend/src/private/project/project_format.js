@@ -36,7 +36,7 @@ class ProjectFormat extends React.Component{
 	render(){
     const descriptionLength = this.props.description.length;
     const maxLength = 58;
-    const id = cookie.load('userInfo') ? parseInt(cookie.load('userInfo').id) : undefined;
+    const id = cookie.load('userInfo') ? parseInt(cookie.load('userInfo').id, 10) : undefined;
 		return(
 			<div>
         <Card style={PRIVATE_PAGE_STYLE.card}>
@@ -108,11 +108,11 @@ class ProjectFormat extends React.Component{
           }
           {
             id === this.props.userId ?  <div>
-                                    <IconButton>
-                                      <EditIcons
-                                        style={PRIVATE_PAGE_STYLE.EditButtonStyle}
-                                      />
-                                    </IconButton>
+                                      <IconButton>
+                                        <EditIcons
+                                          style={PRIVATE_PAGE_STYLE.EditButtonStyle}
+                                        />
+                                      </IconButton>
                                     <IconButton>
                                       <DeleteIcons
                                         style={PRIVATE_PAGE_STYLE.DeleteButtonStyle}
@@ -138,7 +138,7 @@ class ProjectFormat extends React.Component{
   }
 
   _handleVote = () =>{
-    const id = cookie.load('userInfo') ? parseInt(cookie.load('userInfo').id) : undefined;
+    const id = cookie.load('userInfo') ? parseInt(cookie.load('userInfo').id, 10) : undefined;
     if(id !== this.props.userId){
       this.setState({
         points: this.state.points + 1,
