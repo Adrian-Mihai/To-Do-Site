@@ -28,7 +28,7 @@ class AddProject extends React.Component{
         const isEmpty = this.state.title.trim() === '' || this.state.description.trim() === '';
         return(
             <div>
-                <AppHeader title='Add Project'/>
+                <AppHeader title='Add Page'/>
                 <Grid
                     container
                     justify='center'
@@ -92,7 +92,7 @@ class AddProject extends React.Component{
                 window.alert('Project was added');
                 window.location = `${URL_REPO.SHOW_PROJECT}/${userData.id}`;
         }).catch(err =>{
-            window.alert('Project name already exist');
+            window.alert('Project already exist');
         })
     };
 }

@@ -22,6 +22,13 @@ const REQ_HELPER = {
             .set('accept', 'json')
             .withCredentials()
     },
+    deleteWithCooki: url =>{
+      return request
+              .delete(url)
+              .set('X-API-Key', 'foobar')
+              .set('accept', 'json')
+              .withCredentials()
+    }
 };
 
 export default REQ_HELPER;

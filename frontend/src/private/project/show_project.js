@@ -42,6 +42,7 @@ class ShowProject extends React.Component{
                                                             description={project.project_description}
                                                             status = {project.project_status}
                                                             points = {project.project_point}
+                                                            users = {project.project_user_vote}
                                                           />
                                                         </Grid>
                                                         ))

@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
       table.text('project_description');
       table.string('project_status');
       table.integer('project_point');
+      table.string('project_user_vote');
   })
 };
 

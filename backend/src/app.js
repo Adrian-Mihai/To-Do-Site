@@ -8,6 +8,7 @@ const port = process.env.PORT || 8080;
 
 const users = require('./routes/user');
 const projects = require('./routes/project');
+const tasks = require('./routes/task');
 
 const app = express();
 
@@ -21,5 +22,6 @@ app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 app.use('/api', users);
 app.use('/api', projects);
+app.use('/api', tasks);
 
 app.listen(port);

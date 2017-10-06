@@ -26,7 +26,7 @@ class dashbord extends React.Component{
   render(){
     return(
             <div>
-              <AppHeader title="To Do"/>
+              <AppHeader title="Home"/>
               <Grid
                 container
                 style={PUBLIC_PAGE_STYLE.root}

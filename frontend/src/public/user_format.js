@@ -9,6 +9,7 @@ import ExpandMore from 'material-ui-icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 import ViewListIcon from 'material-ui-icons/ViewList';
+import Tooltip from 'material-ui/Tooltip';
 import PUBLIC_PAGE_PAGE from './style/public_page_style';
 import REQ_HELPER from '../helpers/request';
 import URL_REPO from '../constants/url_repo';
@@ -80,12 +81,16 @@ class UserFormat extends React.Component{
               style={PUBLIC_PAGE_PAGE.cardActions}
             >
             <InputLabel>{this.state.points}</InputLabel>
-            <FavoriteIcon style={PUBLIC_PAGE_PAGE.voteStyle}/>
-            <IconButton
-              onClick = {() => (this._handleProjectButtonClick(this.props.id))}
-            >
-              <ViewListIcon style={PUBLIC_PAGE_PAGE.projectStyle}/>
-            </IconButton>
+            <Tooltip placement="bottom" title="Like">
+              <FavoriteIcon style={PUBLIC_PAGE_PAGE.voteStyle}/>
+            </Tooltip>
+            <Tooltip title="Show project" placement="bottom">
+              <IconButton
+                onClick = {() => (this._handleProjectButtonClick(this.props.id))}
+              >
+                <ViewListIcon style={PUBLIC_PAGE_PAGE.projectStyle}/>
+              </IconButton>
+            </Tooltip>
             </CardActions>  
           </Card>
         </div>

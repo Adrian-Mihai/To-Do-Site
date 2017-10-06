@@ -11,9 +11,11 @@ import FavoriteIcon from 'material-ui-icons/Favorite';
 import ExpandLess from 'material-ui-icons/ExpandLess';
 import ExpandMore from 'material-ui-icons/ExpandMore';
 import Collapse from 'material-ui/transitions/Collapse';
+import Tooltip from 'material-ui/Tooltip';
 import REQ_HELPER from '../../helpers/request';
 import URL_REPO from '../../constants/url_repo';
 import PRIVATE_PAGE_STYLE from '../style/private_page_style';
+
 
 class ProjectFormat extends React.Component{
 
@@ -23,10 +25,14 @@ class ProjectFormat extends React.Component{
     this.state = {
       expanded: false,
       points: 0,
+      users: [],
     };
 
     this._handleVote = this._handleVote.bind(this);
     this._getPoints = this._getPoints.bind(this);
+    this._handleEditButtonClick = this._handleEditButtonClick.bind(this);
+    this._handleDeleteButtonClick = this._handleDeleteButtonClick.bind(this);
+    this._handleTaskButtonClick = this._handleTaskButtonClick.bind(this);
 	}
 
   componentDidMount(){
@@ -36,7 +42,7 @@ class ProjectFormat extends React.Component{
 	render(){
     const descriptionLength = this.props.description.length;
     const maxLength = 58;
-    const id = cookie.load('userInfo') ? parseInt(cookie.load('userInfo').id, 10) : undefined;
+    const id = cookie.load('userInfo') ? parseInt(cookie.load('userInfo').id, 10)  : undefined;
 		return(
 			<div>
         <Card style={PRIVATE_PAGE_STYLE.card}>
@@ -96,34 +102,50 @@ class ProjectFormat extends React.Component{
           <CardActions style={PRIVATE_PAGE_STYLE.cardActions}>
           <InputLabel>{this.state.points}</InputLabel>
           {
-            cookie.load('userInfo') ? <IconButton
-                                        onClick={this._handleVote}
-                                      >
-                                        <FavoriteIcon
-                                          style={PRIVATE_PAGE_STYLE.voteStyle}
-                                        />
-                                     </IconButton>  : <FavoriteIcon
+            cookie.load('userInfo') ? <Tooltip placement="bottom" title="Like">
+                                        <IconButton
+                                          onClick={this._handleVote}
+                                        >
+                                          <FavoriteIcon
+                                            style={PRIVATE_PAGE_STYLE.voteStyle}
+                                          />
+                                        </IconButton>
+                                     </Tooltip>  :  <Tooltip placement="bottom"  title="Like">
+                                                      <FavoriteIcon
                                                         style={PRIVATE_PAGE_STYLE.voteStyle}
                                                       />
+                                                    </Tooltip>
           }
           {
             id === this.props.userId ?  <div>
-                                      <IconButton>
-                                        <EditIcons
-                                          style={PRIVATE_PAGE_STYLE.EditButtonStyle}
-                                        />
-                                      </IconButton>
-                                    <IconButton>
-                                      <DeleteIcons
-                                        style={PRIVATE_PAGE_STYLE.DeleteButtonStyle}
-                                      />
-                                    </IconButton>
-                                    <IconButton>
-                                      <ViewListIcon
-                                        style={PRIVATE_PAGE_STYLE.taskStyle}
-                                      />
-                                    </IconButton>
-                                  </div>  :  null 
+                                          <Tooltip placement="bottom" title="Edit">
+                                            <IconButton
+                                              onClick= {() => this._handleEditButtonClick(this.props.id)}
+                                            >
+                                              <EditIcons
+                                                style={PRIVATE_PAGE_STYLE.EditButtonStyle}
+                                              />
+                                            </IconButton>
+                                          </Tooltip>
+                                          <Tooltip placement="bottom" title="Delete">
+                                            <IconButton
+                                              onClick = { () => this._handleDeleteButtonClick(this.props.id)}
+                                            >
+                                              <DeleteIcons
+                                                style={PRIVATE_PAGE_STYLE.DeleteButtonStyle}
+                                              />
+                                            </IconButton>
+                                          </Tooltip>
+                                          <Tooltip placement="bottom" title="Show To-Do">
+                                            <IconButton
+                                              onClick= {() => this._handleTaskButtonClick(this.props.id)}
+                                            >
+                                              <ViewListIcon
+                                              style={PRIVATE_PAGE_STYLE.taskStyle}
+                                              />
+                                            </IconButton>
+                                          </Tooltip>
+                                        </div>  :  null 
           }
           </CardActions>
         </Card>
@@ -134,28 +156,45 @@ class ProjectFormat extends React.Component{
   _getPoints = () =>{
     this.setState({
       points: this.props.points,
+      users: this.props.users,
     });
+  };
+
+  _handleEditButtonClick = id =>{
+    window.location = `${URL_REPO.EDIT_PROJECT}/${id}`;
+  };
+
+  _handleDeleteButtonClick = id =>{
+    REQ_HELPER.deleteWithCooki(`${URL_REPO.BE_DELETE_PROJECT}/${id}`)
+      .then(() =>{
+        window.location = `${URL_REPO.SHOW_PROJECT}/${this.props.userId}`;
+      }).catch(err =>{
+        console.log(err);
+      })
+  };
+
+  _handleTaskButtonClick = id =>{
+    window.location = `${URL_REPO.SHOW_PROJECT}/${id}${URL_REPO.TO_DO_LIST}`;
   }
 
   _handleVote = () =>{
     const id = cookie.load('userInfo') ? parseInt(cookie.load('userInfo').id, 10) : undefined;
-    if(id !== this.props.userId){
-      this.setState({
-        points: this.state.points + 1,
-      }, () =>{
-        REQ_HELPER.putWithoutCooki(`${URL_REPO.BE_VOTE_PROJECT}/${this.props.id}`)
+    if(!this.state.users.toString().includes(id)){
+      REQ_HELPER.putWithoutCooki(`${URL_REPO.BE_VOTE_PROJECT}/${this.props.id}`)
           .send({
-            points: this.state.points,
+            points: this.state.points + 1,
+            users: [...this.state.users, cookie.load('userInfo').id],
           })
           .then(respone =>{
-            console.log(respone);
+            this.setState({
+              points: this.state.points + 1,
+              users: [...this.state.users, cookie.load('userInfo').id],
+            });
           }).catch(err =>{
             console.log(err.message);
           })
-      })
     }
   };
-
 
 }
 

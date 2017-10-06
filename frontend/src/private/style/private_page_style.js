@@ -1,6 +1,7 @@
 import red from 'material-ui/colors/red';
 import green from 'material-ui/colors/green';
 import blue from 'material-ui/colors/blue';
+
 const style = {
     menuNestedList:{
         paddingLeft: '68px',
@@ -57,6 +58,16 @@ const style = {
     voteStyle:{
       color: red[500],
     },
+    selectStyle:{
+      marginTop: '25px',
+    },
+    inputLabelStyle:{
+      marginRight: '10px',
+    },
+    addTaskButtonStyle: {
+      paddingRight: '20px',
+      marginTop: '10px',
+    }
 };
 
 export default style;

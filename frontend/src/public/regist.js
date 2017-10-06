@@ -172,7 +172,7 @@ class Regist extends React.Component{
             })
             .then( (res) =>{
                 cookie.save('userInfo', res.text, { path: '/' });
-                window.location = URL_REPO.ROOT;
+                window.location = `${URL_REPO.SHOW_PROJECT}/${cookie.load('userInfo').id}`;
             }).catch((err) =>{
                 window.alert('User name already exist');
         });
