@@ -25,6 +25,10 @@ exports.up = function(knex, Promise) {
       .integer("user_point")
       .notNullable()
       .defaultTo(0);
+    table
+      .text("user_picture")
+      .notNullable()
+      .defaultTo("");
   });
 };
 

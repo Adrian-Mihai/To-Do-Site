@@ -32,7 +32,14 @@ class userInfo extends React.Component {
           style={{ width: "3rem" }}
         >
           <div>
-            <Avatar>{this.userInfo.name}</Avatar>
+            {this.userInfo.picture !== "null" ? (
+              <Avatar
+                alt={this.userInfo.name}
+                src={require("../user_profile_photo/" + this.userInfo.picture)}
+              />
+            ) : (
+              <Avatar>{this.userInfo.name.charAt(0).toUpperCase()}</Avatar>
+            )}
           </div>
         </IconButton>
         <Menu

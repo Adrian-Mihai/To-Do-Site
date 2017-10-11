@@ -38,7 +38,17 @@ class UserFormat extends React.Component {
       <div>
         <Card style={PUBLIC_PAGE_PAGE.card}>
           <CardHeader
-            avatar={<Avatar>{this.props.name.charAt(0).toUpperCase()}</Avatar>}
+            avatar={
+              this.props.picture !== "null" ? (
+                <Avatar
+                  alt={this.props.name}
+                  src={require("./user_profile_photo/" + this.props.picture)}
+                  style={PUBLIC_PAGE_PAGE.avatarStyle}
+                />
+              ) : (
+                <Avatar>{this.props.name.charAt(0).toUpperCase()}</Avatar>
+              )
+            }
             title={this.props.name}
             subheader={this.props.email}
           />

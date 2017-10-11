@@ -39,12 +39,12 @@ class ProjectFormat extends React.Component {
 
   render() {
     const descriptionLength = this.props.description.length;
-    const maxLength = 58;
+    const maxLength = 35;
     const id = cookie.load("userInfo")
       ? parseInt(cookie.load("userInfo").id, 10)
       : undefined;
     return (
-      <div>
+      <div style={PRIVATE_PAGE_STYLE.taskFormatStyle}>
         <Card style={PRIVATE_PAGE_STYLE.card}>
           <CardContent style={PRIVATE_PAGE_STYLE.cardContent}>
             <Typography
@@ -54,16 +54,6 @@ class ProjectFormat extends React.Component {
             >
               {this.props.title}
             </Typography>
-            <Typography align="right">Status</Typography>
-            {this.props.status === "In work" ? (
-              <Typography align="right" style={PRIVATE_PAGE_STYLE.statusInWork}>
-                {this.props.status}
-              </Typography>
-            ) : (
-              <Typography align="right" style={PRIVATE_PAGE_STYLE.statusDone}>
-                {this.props.status}
-              </Typography>
-            )}
             <Typography type="body2">Description:</Typography>
             <Typography noWrap>{this.props.description}</Typography>
             {descriptionLength > maxLength ? (

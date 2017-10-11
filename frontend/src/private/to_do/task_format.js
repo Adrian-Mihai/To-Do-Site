@@ -27,7 +27,7 @@ class TaskFormat extends React.Component {
 
   render() {
     const taskLength = this.props.description.length;
-    const maxLength = 58;
+    const maxLength = 35;
     return (
       <div style={PRIVATE_PAGE_STYLE.taskFormatStyle}>
         <Card style={PRIVATE_PAGE_STYLE.card}>

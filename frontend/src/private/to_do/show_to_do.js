@@ -5,6 +5,7 @@ import AppHeader from "../../public/components/app_header";
 import Typography from "material-ui/Typography";
 import Button from "material-ui/Button";
 import AddIcon from "material-ui-icons/Add";
+import Divider from "material-ui/Divider";
 import Tooltip from "material-ui/Tooltip";
 import Grid from "material-ui/Grid";
 import Paper from "material-ui/Paper";
@@ -48,15 +49,18 @@ class ShowToDo extends React.Component {
               >
                 To Do
               </Typography>
+              <Divider />
               {this.state.taskToDo.map(task => (
-                <TaskFormat
-                  key={task.id}
-                  id={task.id}
-                  projectId={task.project_id}
-                  title={task.task_title}
-                  description={task.task_description}
-                  date={task.task_date}
-                />
+                <div key={task.id}>
+                  <TaskFormat
+                    id={task.id}
+                    projectId={task.project_id}
+                    title={task.task_title}
+                    description={task.task_description}
+                    date={task.task_date}
+                  />
+                  <Divider />
+                </div>
               ))}
             </Paper>
             <Paper style={PRIVATE_PAGE_STYLE.paperStyle}>
@@ -67,15 +71,18 @@ class ShowToDo extends React.Component {
               >
                 In Work
               </Typography>
+              <Divider />
               {this.state.taskInWork.map(task => (
-                <TaskFormat
-                  key={task.id}
-                  id={task.id}
-                  projectId={task.project_id}
-                  title={task.task_title}
-                  description={task.task_description}
-                  date={task.task_date}
-                />
+                <div key={task.id}>
+                  <TaskFormat
+                    id={task.id}
+                    projectId={task.project_id}
+                    title={task.task_title}
+                    description={task.task_description}
+                    date={task.task_date}
+                  />
+                  <Divider />
+                </div>
               ))}
             </Paper>
             <Paper style={PRIVATE_PAGE_STYLE.paperStyle}>
@@ -86,15 +93,18 @@ class ShowToDo extends React.Component {
               >
                 Done
               </Typography>
+              <Divider />
               {this.state.taskDone.map(task => (
-                <TaskFormat
-                  key={task.id}
-                  id={task.id}
-                  projectId={task.project_id}
-                  title={task.task_title}
-                  description={task.task_description}
-                  date={task.task_date}
-                />
+                <div key={task.id}>
+                  <TaskFormat
+                    id={task.id}
+                    projectId={task.project_id}
+                    title={task.task_title}
+                    description={task.task_description}
+                    date={task.task_date}
+                  />
+                  <Divider />
+                </div>
               ))}
             </Paper>
           </Grid>
