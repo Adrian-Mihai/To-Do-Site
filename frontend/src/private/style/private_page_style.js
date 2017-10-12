@@ -27,7 +27,7 @@ const style = {
     margin: "0px 0px 10px 0px"
   },
   button: {
-    margin: "0px"
+    margin: "0px 0px 10px 0px"
   },
   showMore: {
     width: "-webkit-fill-available",
@@ -66,6 +66,20 @@ const style = {
   },
   buttonStyle: {
     margin: "2rem 2rem 0rem 0rem"
+  },
+  dropZoneStyle: {
+    width: "257px",
+    height: "100px",
+    borderWidth: "2px",
+    borderColor: "rgb(102, 102, 102)",
+    borderStyle: "dashed",
+    borderRadius: "5px",
+    padding: "20px 30px 30px 30px",
+    marginBottom: "10px"
+  },
+  avatarStyle: {
+    width: "60px",
+    height: "60px"
   }
 };
 

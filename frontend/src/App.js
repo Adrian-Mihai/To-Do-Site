@@ -12,6 +12,7 @@ import EditProject from "./private/project/edit_project";
 import ShowToDo from "./private/to_do/show_to_do";
 import AddTask from "./private/to_do/add_task";
 import EditTask from "./private/to_do/edit_task";
+import EditProfile from "./private/user/edit_user";
 
 class App extends Component {
   render() {
@@ -48,6 +49,11 @@ class App extends Component {
               exact
               path={`/:id${URL_REPO.SHOW_PROJECT}/:id${URL_REPO.TO_DO_LIST}${URL_REPO.EDIT_TASK}/:id`}
               component={EditTask}
+            />
+            <PrivateRoute
+              exact
+              path={`${URL_REPO.EDIT_PROFILE}/:id`}
+              component={EditProfile}
             />
             <Route exact path={URL_REPO.ROOT} component={Dashbord} />
             <Route exact path={URL_REPO.LOGIN} component={Login} />

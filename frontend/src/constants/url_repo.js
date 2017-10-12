@@ -2,6 +2,7 @@ const URL_REPO = {
   ROOT: "/",
   LOGIN: "/login",
   REGIST: "/regist",
+  EDIT_PROFILE: "/edit_profile",
   SHOW_PROJECT: "/project",
   ADD_PROJECT: "/add_project",
   EDIT_PROJECT: "/edit_project",

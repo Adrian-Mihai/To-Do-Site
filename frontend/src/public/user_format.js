@@ -46,7 +46,9 @@ class UserFormat extends React.Component {
                   style={PUBLIC_PAGE_PAGE.avatarStyle}
                 />
               ) : (
-                <Avatar>{this.props.name.charAt(0).toUpperCase()}</Avatar>
+                <Avatar style={PUBLIC_PAGE_PAGE.avatarStyle}>
+                  {this.props.name.charAt(0).toUpperCase()}
+                </Avatar>
               )
             }
             title={this.props.name}

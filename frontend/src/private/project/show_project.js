@@ -40,7 +40,7 @@ class ShowProject extends React.Component {
     const userId = cookie.load("userInfo") ? cookie.load("userInfo").id : null;
     this.state.projects.length === 0
       ? (this.verificationId = this.props.match.params.id)
-      : (this.verificationId = this.state.projects[0].user_id);
+      : (this.verificationId = this.state.projects[0].user_id.toString());
     return (
       <div>
         <AppHeader title="Project" />

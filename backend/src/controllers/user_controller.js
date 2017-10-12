@@ -19,9 +19,7 @@ userController.Login = (req, res) => {
           bcrypt.compare(userData.user_password, hash, (err, response) => {
             if (response) {
               let cooki = {
-                id: data.id.toString(),
-                name: data.user_name,
-                picture: data.user_picture
+                id: data.id.toString()
               };
               return res.status(200).send(cooki);
             } else {
@@ -63,9 +61,7 @@ userController.Regist = (req, res) => {
                 .where("user_name", userData.user_name)
                 .then(data => {
                   let cooki = {
-                    id: data.id.toString(),
-                    name: data.user_name,
-                    picture: data.user_picture
+                    id: data.id.toString()
                   };
                   return res.status(200).send(cooki);
                 })
@@ -107,6 +103,38 @@ userController.getAll = (req, res) => {
     .catch(err => {
       console.log(err.message);
       return res.status(400).send(err.message);
+    });
+};
+
+userController.getUserById = (req, res) => {
+  const id = req.params.id;
+  knex("users")
+    .first("user_description", "user_visibility", "user_picture", "user_name")
+    .where("id", id)
+    .then(data => {
+      return res.status(200).send(data);
+    })
+    .catch(err => {
+      console.log(err.message);
+      return res.status(500).send(err);
+    });
+};
+
+userController.editUser = (req, res) => {
+  const id = req.params.id;
+  const data = req.body;
+  if (req.files) {
+    data.user_picture = req.files[0].filename;
+  }
+  knex("users")
+    .where("id", id)
+    .update(data)
+    .then(() => {
+      return res.status(200).send("Success");
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(500).send(err);
     });
 };
 

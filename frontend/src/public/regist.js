@@ -113,33 +113,25 @@ class Regist extends React.Component {
                   fullWidth
                 />
               ) : null}
-              {this.state.picture ? (
-                <Dropzone
-                  multiple={false}
-                  accept="image/jpeg, image/png"
-                  onDrop={this._onImageDrop}
-                  style={PUBLIC_PAGE_STYLE.dropZoneStyle}
-                >
+              <Dropzone
+                multiple={false}
+                accept="image/jpeg, image/png"
+                onDrop={this._onImageDrop}
+                style={PUBLIC_PAGE_STYLE.dropZoneStyle}
+              >
+                {this.state.picture ? (
                   <center>
                     <Avatar
                       style={PUBLIC_PAGE_STYLE.avatarStyle}
                       src={this.state.picture.preview}
                     />
                   </center>
-                </Dropzone>
-              ) : (
-                <Dropzone
-                  multiple={false}
-                  accept="image/jpeg, image/png"
-                  onDrop={this._onImageDrop}
-                  style={PUBLIC_PAGE_STYLE.dropZoneStyle}
-                >
+                ) : (
                   <InputLabel>
                     <center>Drop an image or click to select</center>
                   </InputLabel>
-                </Dropzone>
-              )}
-
+                )}
+              </Dropzone>
               <TextField
                 required={true}
                 id="password"
